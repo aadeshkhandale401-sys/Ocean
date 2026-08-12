@@ -381,7 +381,7 @@ export default function ServicesPage() {
                     </h4>
 
                     <ul className="space-y-3">
-                      {service.features.map((feature, j) => (
+                      {service.features.map((feature: string, j: number) => (
                         <li key={j} className="flex items-start gap-2.5 text-xs sm:text-sm font-medium text-slate-700">
                           <CheckCircle2 size={16} className="mt-0.5 flex-shrink-0 text-[var(--color-primary)]" />
                           <span className="leading-snug">{feature}</span>
@@ -503,7 +503,7 @@ export default function ServicesPage() {
                     </h4>
                   </div>
                   <ul className="space-y-2.5">
-                    {selectedService.features.map((feature, j) => (
+                    {selectedService.features.map((feature: string, j: number) => (
                       <li key={j} className="flex items-start gap-2.5 text-xs sm:text-sm font-medium text-slate-700">
                         <CheckCircle2 size={15} className="mt-0.5 flex-shrink-0 text-[var(--color-primary)]" />
                         <span className="leading-snug">{feature}</span>

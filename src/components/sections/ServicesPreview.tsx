@@ -21,11 +21,22 @@ const iconMap: Record<string, any> = {
   ShoppingBag: ShoppingBag,
 };
 
+interface DisplayServiceItem {
+  id: string;
+  icon: any;
+  title: string;
+  description: string;
+  fullDescription: string;
+  features: string[];
+  tags: string[];
+  badge: string;
+}
+
 export default function ServicesPreview() {
   const { data: dbServices } = useFirestore<Service>("services");
-  const [selectedService, setSelectedService] = useState<any | null>(null);
+  const [selectedService, setSelectedService] = useState<DisplayServiceItem | null>(null);
 
-  const displayServices = dbServices
+  const displayServices: DisplayServiceItem[] = dbServices
     .filter((s) => s.status !== "draft")
     .map((s, index) => {
       const IconComp = iconMap[s.icon] || Wrench;
@@ -33,8 +44,8 @@ export default function ServicesPreview() {
         id: s.id,
         icon: IconComp,
         title: s.title,
-        description: s.shortDescription || s.fullDescription,
-        fullDescription: s.fullDescription || s.shortDescription,
+        description: s.shortDescription || s.fullDescription || "",
+        fullDescription: s.fullDescription || s.shortDescription || "",
         features: s.features || [],
         tags: [s.category || "IS Standards", "Certification"],
         badge: s.badge || `0${index + 1}`,
@@ -231,7 +242,7 @@ export default function ServicesPreview() {
                     </h4>
                   </div>
                   <ul className="space-y-2.5">
-                    {selectedService.features.map((feature, j) => (
+                    {selectedService.features.map((feature: string, j: number) => (
                       <li key={j} className="flex items-start gap-2.5 text-xs sm:text-sm font-medium" style={{ color: "var(--color-text-primary)" }}>
                         <CheckCircle2 size={15} className="mt-0.5 flex-shrink-0" style={{ color: "var(--color-primary)" }} />
                         <span className="leading-snug">{feature}</span>
