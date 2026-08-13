@@ -1,66 +1,57 @@
 // ============================================
-// Firebase Storage Helpers
+// Client-Side Storage & Upload Helpers
+// (Pure client-side processing — No Firebase Storage required)
 // ============================================
 
-import {
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  deleteObject,
-  UploadTask,
-} from "firebase/storage";
-import { storage } from "./firebase";
-
-// Upload a single file with progress tracking & robust fallback
+// Upload a single file with client-side progress tracking & local base64/blob conversion
 export async function uploadFile(
   file: File,
-  path: string,
+  _path: string,
   onProgress?: (progress: number) => void
 ): Promise<string> {
-  try {
-    const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
-    const storageRef = ref(storage, `${path}/${Date.now()}_${sanitizedName}`);
-    const uploadTask: UploadTask = uploadBytesResumable(storageRef, file);
+  if (onProgress) onProgress(30);
 
-    return await new Promise<string>((resolve, reject) => {
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          if (onProgress) onProgress(progress);
-        },
-        (error) => reject(error),
-        async () => {
-          const url = await getDownloadURL(uploadTask.snapshot.ref);
-          resolve(url);
-        }
-      );
-    });
-  } catch (err) {
-    console.warn("Firebase Storage upload fallback engaged:", err);
-    return new Promise<string>(async (resolve, reject) => {
-      try {
-        if (file.type.startsWith("image/")) {
-          // Compress heavily for lightweight local storage data URL (< 50KB)
-          const compressed = await compressImage(file, 800, 0.7);
+  return new Promise<string>((resolve) => {
+    if (file.type.startsWith("image/")) {
+      compressImage(file, 800, 0.7)
+        .then((compressed) => {
+          if (onProgress) onProgress(70);
           const reader = new FileReader();
           reader.onload = () => {
             if (onProgress) onProgress(100);
-            resolve(reader.result as string);
+            resolve((reader.result as string) || URL.createObjectURL(file));
           };
-          reader.onerror = (e) => reject(e);
+          reader.onerror = () => {
+            if (onProgress) onProgress(100);
+            resolve(URL.createObjectURL(file));
+          };
           reader.readAsDataURL(compressed);
-        } else {
-          // For videos or large media, use object URL for zero local storage quota consumption
-          if (onProgress) onProgress(100);
-          const objectUrl = URL.createObjectURL(file);
-          resolve(objectUrl);
-        }
-      } catch (fallbackErr) {
-        reject(fallbackErr);
+        })
+        .catch(() => {
+          if (onProgress) onProgress(70);
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (onProgress) onProgress(100);
+            resolve((reader.result as string) || URL.createObjectURL(file));
+          };
+          reader.onerror = () => {
+            if (onProgress) onProgress(100);
+            resolve(URL.createObjectURL(file));
+          };
+          reader.readAsDataURL(file);
+        });
+    } else {
+      if (onProgress) onProgress(100);
+      try {
+        resolve(URL.createObjectURL(file));
+      } catch {
+        const reader = new FileReader();
+        reader.onload = () => resolve((reader.result as string) || "");
+        reader.onerror = () => resolve("");
+        reader.readAsDataURL(file);
       }
-    });
-  }
+    }
+  });
 }
 
 // Upload multiple files
@@ -79,17 +70,9 @@ export async function uploadMultipleFiles(
   return urls;
 }
 
-// Delete a file by URL
-export async function deleteFile(url: string): Promise<void> {
-  if (!url || url.startsWith("data:") || url.startsWith("blob:") || url.startsWith("/")) {
-    return;
-  }
-  try {
-    const storageRef = ref(storage, url);
-    await deleteObject(storageRef);
-  } catch (error) {
-    console.warn("Storage delete notice:", error);
-  }
+// Delete a file by URL (No-op for client-side blob/data URLs)
+export async function deleteFile(_url: string): Promise<void> {
+  return Promise.resolve();
 }
 
 // Delete multiple files
@@ -98,7 +81,7 @@ export async function deleteMultipleFiles(urls: string[]): Promise<void> {
   await Promise.all(promises);
 }
 
-// Compress image before upload (client-side)
+// Compress image client-side before storing
 export function compressImage(
   file: File,
   maxWidth: number = 1200,

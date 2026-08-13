@@ -20,16 +20,19 @@ export default function AdminMediaPage() {
   const [filterType, setFilterType] = useState<"all" | "image" | "video">("all");
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    for (const file of Array.from(e.target.files)) {
+    if (!e.target.files || e.target.files.length === 0) return;
+    const filesArray = Array.from(e.target.files);
+    for (const file of filesArray) {
       try {
         await upload(file, "general");
         toast.success(`Uploaded: ${file.name}`);
-        refetch();
-      } catch {
+      } catch (err) {
+        console.error("Upload failed for:", file.name, err);
         toast.error(`Upload failed: ${file.name}`);
       }
     }
+    e.target.value = "";
+    refetch();
   };
 
   const handleDelete = async (item: MediaItem) => {

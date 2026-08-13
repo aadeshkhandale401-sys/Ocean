@@ -237,7 +237,7 @@ export default function FAQPage() {
               Still Have Questions?
             </h3>
             <p className="text-sm sm:text-base mb-8 text-slate-500 max-w-lg mx-auto leading-relaxed">
-              Our engineering team in Ch. Sambhaji Nagar is ready to assist with your hospital gas pipeline questions.
+              Our engineering team in Chh. Sambhaji Nagar is ready to assist with your hospital gas pipeline questions.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5">

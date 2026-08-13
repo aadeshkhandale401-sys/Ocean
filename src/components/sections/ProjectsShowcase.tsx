@@ -16,7 +16,7 @@ const staticFallbackProjects: Partial<Project>[] = [
     id: "p1",
     title: "Complete MGPS Installation — Shri Sai Hospital",
     client: "Shri Sai Hospital",
-    location: "Ch. Sambhaji Nagar, MH",
+    location: "Chh. Sambhaji Nagar, MH",
     completionDate: "Jan 2025",
     category: "MGPS Installation",
     images: ["/images/projects/mgps-installation.png"],
@@ -48,10 +48,10 @@ const staticFallbackProjects: Partial<Project>[] = [
 ];
 
 export default function ProjectsShowcase() {
-  const { data: dbProjects } = useFirestore<Project>("projects");
+  const { data: dbProjects, loading } = useFirestore<Project>("projects");
   const [selectedProject, setSelectedProject] = useState<Partial<Project> | null>(null);
 
-  const projectsToDisplay = dbProjects.length > 0 ? dbProjects.slice(0, 3) : (staticFallbackProjects as Project[]);
+  const projectsToDisplay = dbProjects.length > 0 ? dbProjects.slice(0, 3) : (loading ? (staticFallbackProjects as Project[]).slice(0, 3) : []);
 
   return (
     <section className="section bg-slate-900 text-white relative overflow-hidden">

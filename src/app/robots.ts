@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin/", "/api/"],
       },
     ],
-    sitemap: "https://oceanmgps.com/sitemap.xml",
+    sitemap: "https://oceanmgps.in/sitemap.xml",
   };
 }

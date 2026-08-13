@@ -28,22 +28,30 @@ export function useMediaUpload(): UploadState {
       setError(null);
       setProgress(0);
 
-      // Compress images before upload
+      // Safe image compression
       let processedFile = file;
       if (file.type.startsWith("image/")) {
-        processedFile = await compressImage(file);
+        try {
+          processedFile = await compressImage(file);
+        } catch {
+          processedFile = file;
+        }
       }
 
       const url = await uploadFile(processedFile, folder, setProgress);
 
-      // Save media metadata to Firestore
-      await addDocument<Omit<MediaItem, "id" | "createdAt">>("media", {
-        url,
-        name: file.name,
-        type: file.type.startsWith("image/") ? "image" : "video",
-        size: processedFile.size,
-        folder,
-      } as Omit<MediaItem, "id" | "createdAt">);
+      // Save media metadata
+      try {
+        await addDocument<Omit<MediaItem, "id" | "createdAt">>("media", {
+          url: url || "",
+          name: file.name || "Uploaded Media",
+          type: file.type.startsWith("image/") ? "image" : "video",
+          size: processedFile.size || file.size || 0,
+          folder: folder || "general",
+        } as Omit<MediaItem, "id" | "createdAt">);
+      } catch (docErr) {
+        console.warn("Failed to record media document:", docErr);
+      }
 
       return url;
     } catch (err) {

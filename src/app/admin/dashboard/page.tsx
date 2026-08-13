@@ -14,8 +14,10 @@ import {
   Plus,
   ExternalLink,
   ChevronRight,
-  Activity,
+  Database,
+  RefreshCw,
 } from "lucide-react";
+import toast from "react-hot-toast";
 import { getDocuments } from "@/lib/firestore";
 
 export default function AdminDashboard() {
@@ -26,6 +28,22 @@ export default function AdminDashboard() {
     media: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [seeding, setSeeding] = useState(false);
+
+  const handleSeed = async () => {
+    if (!confirm("Populate default products, projects, services, and settings directly into Firestore Cloud?")) return;
+    setSeeding(true);
+    try {
+      const { seedDatabase } = await import("@/lib/seed");
+      const res = await seedDatabase(true);
+      toast.success(`Firestore Seeded! ${res.products} products, ${res.projects} projects, ${res.services} services created.`);
+      setTimeout(() => window.location.reload(), 1000);
+    } catch {
+      toast.error("Seeding failed. Please check Firebase security rules in console.");
+    } finally {
+      setSeeding(false);
+    }
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -67,6 +85,13 @@ export default function AdminDashboard() {
     { label: "Upload Media", href: "/admin/media", icon: ImageIcon },
   ];
 
+  const handleClearCache = async () => {
+    const { clearAllLocalData } = await import("@/lib/firestore");
+    clearAllLocalData();
+    toast.success("Cache cleared & re-synced with Cloud Firestore!");
+    setTimeout(() => window.location.reload(), 800);
+  };
+
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
@@ -82,13 +107,31 @@ export default function AdminDashboard() {
             Manage your products, projects, services, and media.
           </p>
         </div>
-        <Link
-          href="/"
-          target="_blank"
-          className="btn btn-outline btn-sm"
-        >
-          <ExternalLink size={14} /> View Live Website
-        </Link>
+        <div className="flex items-center gap-2 flex-wrap">
+          <button
+            onClick={handleClearCache}
+            className="btn btn-outline btn-sm border-slate-200 text-slate-700 hover:bg-slate-50"
+            title="Clear local browser cache and force re-sync from Cloud Firestore"
+          >
+            <RefreshCw size={14} /> Clear Local Cache
+          </button>
+          <button
+            onClick={handleSeed}
+            disabled={seeding}
+            className="btn btn-outline btn-sm border-blue-200 text-blue-700 hover:bg-blue-50"
+            title="Populate Firestore Cloud with seed data"
+          >
+            {seeding ? <RefreshCw size={14} className="animate-spin" /> : <Database size={14} />}
+            {seeding ? "Seeding..." : "Seed Firestore Cloud"}
+          </button>
+          <Link
+            href="/"
+            target="_blank"
+            className="btn btn-outline btn-sm"
+          >
+            <ExternalLink size={14} /> View Live Website
+          </Link>
+        </div>
       </div>
 
       {/* Stat Cards */}

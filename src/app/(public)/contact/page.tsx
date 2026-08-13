@@ -22,8 +22,10 @@ import {
 import toast from "react-hot-toast";
 import { DEFAULT_SETTINGS, SERVICE_INTERESTS } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
+import { useSettings } from "@/hooks/useSettings";
 
 function ContactFormContent() {
+  const settings = useSettings();
   const searchParams = useSearchParams();
   const prefilledService = searchParams.get("service") || searchParams.get("component") || searchParams.get("industry") || "";
   const prefilledProduct = searchParams.get("product") || "";
@@ -33,9 +35,14 @@ function ContactFormContent() {
     email: "",
     phone: "",
     organization: "",
-    serviceInterest: "",
-    message: "",
+    serviceInterest: prefilledService || prefilledProduct || "MGPS Turnkey Installation",
+    message: prefilledProduct
+      ? `Hello, I'm interested in getting specifications and a quote for: ${prefilledProduct}.`
+      : prefilledService
+      ? `Hello, I'm interested in your service: ${prefilledService}. Please share scope & BOQ details.`
+      : "",
   });
+
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -43,8 +50,12 @@ function ContactFormContent() {
     if (prefilledService || prefilledProduct) {
       setFormData((prev) => ({
         ...prev,
-        serviceInterest: prefilledService || prev.serviceInterest,
-        message: prefilledProduct ? `I would like a technical quote and BOQ for: ${prefilledProduct}` : prev.message,
+        serviceInterest: prefilledService || prefilledProduct || prev.serviceInterest,
+        message: prefilledProduct
+          ? `Hello, I'm interested in getting specifications and a quote for: ${prefilledProduct}.`
+          : prefilledService
+          ? `Hello, I'm interested in your service: ${prefilledService}. Please share scope & BOQ details.`
+          : prev.message,
       }));
     }
   }, [prefilledService, prefilledProduct]);
@@ -57,74 +68,67 @@ function ContactFormContent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
     setSubmitting(true);
-
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "web3forms-demo-key",
-          subject: `New MGPS Enquiry from ${formData.name} — Ocean MGPS`,
-          from_name: formData.name,
-          ...formData,
-        }),
+      const { addDocument } = await import("@/lib/firestore");
+      await addDocument("enquiries", {
+        ...formData,
+        status: "new",
       });
-
-      if (res.ok) {
-        setSubmitted(true);
-        toast.success("Enquiry submitted successfully! Our team will contact you shortly.");
-        setFormData({ name: "", email: "", phone: "", organization: "", serviceInterest: "", message: "" });
-      } else {
-        throw new Error("Submission failed");
-      }
-    } catch {
-      toast.error("Network response saved. We will contact you at your phone number.");
       setSubmitted(true);
+      toast.success("Thank you! Your enquiry has been submitted successfully.");
+    } catch {
+      toast.error("Failed to submit enquiry. Please try WhatsApp or call us directly.");
     } finally {
       setSubmitting(false);
     }
   };
 
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "917775904214";
+  const whatsappNumber = settings.whatsapp || "917775904214";
 
   return (
-    <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-start w-full">
-      {/* Left Column: Contact Information — Clean Minimalist */}
-      <div className="w-full lg:w-5/12 flex flex-col gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+      {/* Left Column: Direct Contact Info */}
+      <div className="lg:col-span-5 space-y-6">
         <div>
-          <span className="text-[11px] font-extrabold uppercase tracking-widest text-[var(--color-primary)] block mb-1">
-            DIRECT CONNECT
+          <span className="text-[11px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] opacity-80 block mb-2">
+            DIRECT CONTACT
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight" style={{ fontFamily: "var(--font-display)" }}>
-            Get in Touch with Our <span className="text-gradient">Engineers</span>
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-2 leading-relaxed">
-            Have questions about turnkey hospital MGPS installation, commercial LPG copper piping, or medical equipment? Reach out directly.
+          <h2
+            className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Reach Our Engineering Office Directly
+          </h2>
+          <p className="text-sm text-slate-500 mt-2 leading-relaxed">
+            Our technical team in Chh. Sambhaji Nagar is available for site surveys, BOQ preparation, and emergency support.
           </p>
         </div>
 
-        {/* Contact Info Items */}
-        <div className="space-y-5 pt-2">
-          {/* Address */}
+        {/* Info Items List */}
+        <div className="space-y-4 pt-2">
+          {/* Location */}
           <div className="flex items-start gap-3.5">
             <div className="w-10 h-10 flex-shrink-0 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mt-0.5">
               <MapPin size={18} />
             </div>
             <div>
               <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">
-                Headquarters Address
+                Headquarters & Workshop
               </span>
-              <p className="text-sm font-semibold text-slate-800 leading-snug">
-                Ocean MGPS Sales & Multi Services
-              </p>
-              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                Ch. Sambhaji Nagar, Maharashtra 431005, India
+              <p className="text-sm font-semibold text-slate-800 leading-relaxed">
+                {settings.address}
               </p>
             </div>
           </div>
 
-          {/* Helplines */}
+          {/* Phone */}
           <div className="flex items-start gap-3.5">
             <div className="w-10 h-10 flex-shrink-0 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mt-0.5">
               <Phone size={18} />
@@ -134,9 +138,15 @@ function ContactFormContent() {
                 Direct Helplines
               </span>
               <div className="flex flex-col gap-1 text-sm font-semibold text-slate-800">
-                <a href="tel:8698648386" className="hover:text-blue-600 transition-colors">+91 8698648386 (Ganesh Khandale — MD)</a>
-                <a href="tel:7775904214" className="hover:text-blue-600 transition-colors">+91 7775904214 (Aadesh Khandale — Biomedical Eng.)</a>
-                <a href="tel:8007515182" className="hover:text-blue-600 transition-colors">+91 8007515182</a>
+                {settings.phones.map((phone: string) => (
+                  <a
+                    key={phone}
+                    href={`tel:${phone.replace(/\s+/g, "")}`}
+                    className="hover:text-blue-600 transition-colors"
+                  >
+                    {phone.startsWith("+91") ? phone : `+91 ${phone}`}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -151,10 +161,10 @@ function ContactFormContent() {
                 Official Email
               </span>
               <a
-                href="mailto:oceanmgps@gmail.com"
+                href={`mailto:${settings.email}`}
                 className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors"
               >
-                oceanmgps@gmail.com
+                {settings.email}
               </a>
             </div>
           </div>
@@ -169,7 +179,7 @@ function ContactFormContent() {
                 Business Hours
               </span>
               <p className="text-sm font-semibold text-slate-800">
-                {DEFAULT_SETTINGS.businessHours}
+                {settings.businessHours}
               </p>
             </div>
           </div>
@@ -208,7 +218,7 @@ function ContactFormContent() {
               Enquiry Submitted Successfully!
             </h3>
             <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-              Thank you for reaching out to Ocean MGPS. Our engineering team in Ch. Sambhaji Nagar will review your request and contact you within 24 hours.
+              Thank you for reaching out to Ocean MGPS. Our engineering team in Chh. Sambhaji Nagar will review your request and contact you within 24 hours.
             </p>
             <button
               onClick={() => setSubmitted(false)}
@@ -366,7 +376,7 @@ export default function ContactPage() {
                   color: "var(--color-primary)",
                 }}
               >
-                <MapPin size={14} /> Ch. Sambhaji Nagar, Maharashtra
+                <MapPin size={14} /> Chh. Sambhaji Nagar, Maharashtra
               </span>
             </div>
             <h1
@@ -404,7 +414,7 @@ export default function ContactPage() {
                   Our Headquarters Location
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Ch. Sambhaji Nagar, Maharashtra 431005, India | Mon - Sat: 9:00 AM - 7:00 PM
+                  Chh. Sambhaji Nagar, Maharashtra 431005, India | Mon - Sat: 9:00 AM - 7:00 PM
                 </p>
               </div>
               <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-600 hidden sm:inline-block">
@@ -421,7 +431,7 @@ export default function ContactPage() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Ocean MGPS Location — Ch. Sambhaji Nagar"
+                title="Ocean MGPS Location — Chh. Sambhaji Nagar"
               />
             </div>
           </div>

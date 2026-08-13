@@ -2,9 +2,11 @@
 // Footer — Spacious White with 4-Column Grid
 // ============================================
 
+"use client";
+
 import Link from "next/link";
 import { MapPin, Phone, Mail, Globe, ArrowUpRight } from "lucide-react";
-import { DEFAULT_SETTINGS } from "@/lib/constants";
+import { useSettings } from "@/hooks/useSettings";
 
 import Logo from "@/components/ui/Logo";
 
@@ -29,6 +31,7 @@ const serviceLinks = [
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const settings = useSettings();
 
   return (
     <footer
@@ -43,7 +46,7 @@ export default function Footer() {
               <Logo size="md" />
             </div>
             <p className="text-xs sm:text-sm leading-relaxed text-slate-600">
-              Highly specialized stockist, supplier & installer of Medical Gas Pipeline Systems and hospital equipment across India.
+              {settings.about || "Highly specialized stockist, supplier & installer of Medical Gas Pipeline Systems and hospital equipment across India."}
             </p>
             <div className="flex items-center gap-2 pt-1">
               <span className="px-3 py-1 text-xs font-semibold rounded-full bg-blue-50 text-[var(--color-primary)] border border-blue-100">
@@ -101,19 +104,19 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin size={16} className="text-[var(--color-primary)] flex-shrink-0 mt-0.5" />
                 <span className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  {DEFAULT_SETTINGS.address}
+                  {settings.address}
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <Phone size={16} className="text-[var(--color-primary)] flex-shrink-0 mt-0.5" />
                 <div className="flex flex-col">
-                  {DEFAULT_SETTINGS.phones.map((phone) => (
+                  {settings.phones.map((phone) => (
                     <a
                       key={phone}
-                      href={`tel:+91${phone}`}
+                      href={`tel:+91${phone.replace(/\s+/g, "")}`}
                       className="text-xs sm:text-sm text-slate-600 hover:text-[var(--color-primary)] no-underline"
                     >
-                      +91 {phone}
+                      {phone.startsWith("+91") ? phone : `+91 ${phone}`}
                     </a>
                   ))}
                 </div>
@@ -121,16 +124,16 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Mail size={16} className="text-[var(--color-primary)] flex-shrink-0" />
                 <a
-                  href={`mailto:${DEFAULT_SETTINGS.email}`}
+                  href={`mailto:${settings.email}`}
                   className="text-xs sm:text-sm text-slate-600 hover:text-[var(--color-primary)] no-underline"
                 >
-                  {DEFAULT_SETTINGS.email}
+                  {settings.email}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Globe size={16} className="text-[var(--color-primary)] flex-shrink-0" />
                 <span className="text-xs sm:text-sm text-slate-600">
-                  {DEFAULT_SETTINGS.website}
+                  {settings.website}
                 </span>
               </li>
             </ul>

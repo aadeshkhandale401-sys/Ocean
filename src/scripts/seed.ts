@@ -7,12 +7,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, doc, setDoc, collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDWQtftEPm1EYk3euuz1L9zdDvyqUeE92k",
-  authDomain: "ocean-6474d.firebaseapp.com",
-  projectId: "ocean-6474d",
-  storageBucket: "ocean-6474d.firebasestorage.app",
-  messagingSenderId: "378883682848",
-  appId: "1:378883682848:web:f08e84501ca7570cf98245",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDWQtftEPm1EYk3euuz1L9zdDvyqUeE92k",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "ocean-6474d.firebaseapp.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "ocean-6474d",
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "ocean-6474d.firebasestorage.app",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "378883682848",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:378883682848:web:f08e84501ca7570cf98245",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -500,12 +500,12 @@ const projects = [
 const siteSettings = {
   companyName: "Ocean MGPS Sales & Multi Services",
   tagline: "MGPS Installer | Sales & Multi Services",
-  about: "We are a highly specialized stockist, supplier, and installer of Medical Gas Pipeline Systems and hospital equipment. Based in Ch. Sambhaji Nagar, Maharashtra, we serve healthcare facilities across India with quality products, expert installation services, and reliable after-sales support. With over a decade of experience and 150+ successful projects, we are your trusted partner for all MGPS needs.",
-  address: "Mukund wadi, N-2, CIDCO, Ch. Sambhaji Nagar, Maharashtra 431003, India",
+  about: "We are a highly specialized stockist, supplier, and installer of Medical Gas Pipeline Systems and hospital equipment. Based in Chh. Sambhaji Nagar, Maharashtra, we serve healthcare facilities across India with quality products, expert installation services, and reliable after-sales support. With over a decade of experience and 150+ successful projects, we are your trusted partner for all MGPS needs.",
+  address: "Mukund wadi, N-2, CIDCO, Chh. Sambhaji Nagar, Maharashtra 431003, India",
   phones: ["8698648386", "8007515182", "7775904214"],
   email: "oceanmgps@gmail.com",
   whatsapp: "917775904214",
-  website: "www.oceanmgps.com",
+  website: "www.oceanmgps.in",
   socialLinks: [],
   heroImages: ["/images/projects/mgps-installation.png"],
   stats: [

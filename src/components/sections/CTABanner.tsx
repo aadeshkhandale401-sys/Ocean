@@ -51,7 +51,7 @@ export default function CTABanner() {
 
             {/* Description */}
             <p className="text-sm sm:text-base mb-8 leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
-              Get in touch with our engineering team in Ch. Sambhaji Nagar for a free site evaluation and tailored quotation. From planning to commissioning.
+              Get in touch with our engineering team in Chh. Sambhaji Nagar for a free site evaluation and tailored quotation. From planning to commissioning.
             </p>
 
             {/* Action Buttons */}

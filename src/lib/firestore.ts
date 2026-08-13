@@ -48,11 +48,52 @@ function saveLocalCollection<T>(collectionName: string, items: T[]): void {
   }
 }
 
+function getDeletedItems(collectionName: string): Set<string> {
+  if (typeof window === "undefined") return new Set();
+  try {
+    const raw = localStorage.getItem(`ocean_deleted_${collectionName}`);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function recordDeletedItem(collectionName: string, id: string, title?: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    const deleted = getDeletedItems(collectionName);
+    deleted.add(id);
+    if (title) deleted.add(title.toLowerCase().trim());
+    localStorage.setItem(`ocean_deleted_${collectionName}`, JSON.stringify(Array.from(deleted)));
+  } catch (err) {
+    console.warn("Failed to record deleted item:", err);
+  }
+}
+
+export function clearAllLocalData(): void {
+  if (typeof window === "undefined") return;
+  const keys = ["products", "projects", "services", "settings", "media", "enquiries"];
+  for (const k of keys) {
+    localStorage.removeItem(`ocean_local_${k}`);
+    localStorage.removeItem(`ocean_deleted_${k}`);
+  }
+  notifyDbUpdated();
+}
+
 // Get all documents from a collection with local fallback
 export async function getDocuments<T>(
   collectionName: string
 ): Promise<T[]> {
   const localItems = getLocalCollection<T>(collectionName);
+  const deleted = getDeletedItems(collectionName);
+
+  const activeLocals = localItems.filter((item: any) => {
+    if (deleted.has(item.id)) return false;
+    const t = (item.title || item.name || "").toLowerCase().trim();
+    if (t && deleted.has(t)) return false;
+    return true;
+  });
+
   try {
     const snapshot = await getDocs(collection(db, collectionName));
     const remoteItems = snapshot.docs.map((doc) => ({
@@ -60,15 +101,46 @@ export async function getDocuments<T>(
       ...doc.data(),
     })) as T[];
 
-    // Merge remote items with local items (avoiding duplicates)
-    const remoteIds = new Set(remoteItems.map((item: any) => item.id));
-    const uniqueLocals = localItems.filter((item: any) => !remoteIds.has(item.id));
-    const merged = [...remoteItems, ...uniqueLocals];
-    saveLocalCollection(collectionName, merged);
-    return merged;
+    const activeRemotes = remoteItems.filter((item: any) => {
+      if (deleted.has(item.id)) return false;
+      const t = (item.title || item.name || "").toLowerCase().trim();
+      if (t && deleted.has(t)) return false;
+      return true;
+    });
+
+    if (activeRemotes.length > 0) {
+      // Cloud Firestore is authoritative! Purge deleted remote items from local storage
+      const now = Date.now();
+      const freshLocals = activeLocals.filter((item: any) => {
+        if (!item.id.startsWith("loc_")) return false; // Remote item not in Firestore Cloud is deleted!
+        const created = item.createdAt ? new Date(item.createdAt).getTime() : 0;
+        return now - created < 2 * 60 * 1000; // 2 minutes window for newly added offline items
+      });
+
+      const remoteIds = new Set(activeRemotes.map((item: any) => item.id));
+      const remoteTitles = new Set(
+        activeRemotes
+          .map((item: any) => (item.title || item.name || "").toLowerCase().trim())
+          .filter(Boolean)
+      );
+
+      const uniqueFreshLocals = freshLocals.filter((item: any) => {
+        if (remoteIds.has(item.id)) return false;
+        const t = (item.title || item.name || "").toLowerCase().trim();
+        if (t && remoteTitles.has(t)) return false;
+        return true;
+      });
+
+      const merged = [...activeRemotes, ...uniqueFreshLocals];
+      saveLocalCollection(collectionName, merged);
+      return merged;
+    } else {
+      saveLocalCollection(collectionName, activeLocals);
+      return activeLocals;
+    }
   } catch (err) {
     console.warn(`Firestore getDocs failed for ${collectionName}, returning local items:`, err);
-    return localItems;
+    return activeLocals;
   }
 }
 
@@ -77,6 +149,9 @@ export async function getDocument<T>(
   collectionName: string,
   id: string
 ): Promise<T | null> {
+  const deleted = getDeletedItems(collectionName);
+  if (deleted.has(id)) return null;
+
   try {
     const docRef = doc(db, collectionName, id);
     const docSnap = await getDoc(docRef);
@@ -163,6 +238,11 @@ export async function deleteDocument(
 ): Promise<void> {
   notifyDbUpdated(collectionName);
   const localItems = getLocalCollection<any>(collectionName);
+  const foundItem = localItems.find((item) => item.id === id);
+  const title = foundItem?.title || foundItem?.name;
+
+  recordDeletedItem(collectionName, id, title);
+
   const filteredLocals = localItems.filter((item) => item.id !== id);
   saveLocalCollection(collectionName, filteredLocals);
   notifyDbUpdated(collectionName);

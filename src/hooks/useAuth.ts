@@ -25,7 +25,7 @@ export function useAuth(): AuthState {
       if (typeof window !== "undefined" && localStorage.getItem("ocean_admin_logged_in") === "true") {
         setUser({
           uid: "admin-local-session",
-          email: "admin@oceanmgps.com",
+          email: "admin@oceanmgps.in",
           displayName: "Admin Administrator",
         } as unknown as User);
         setLoading(false);

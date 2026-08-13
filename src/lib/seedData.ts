@@ -149,7 +149,7 @@ export const INITIAL_PROJECTS = [
   {
     title: "Turnkey MGPS & Modular OT Setup — Apex Multi-Specialty Hospital",
     client: "Apex Hospital (150 Beds)",
-    location: "Ch. Sambhaji Nagar, Maharashtra",
+    location: "Chh. Sambhaji Nagar, Maharashtra",
     description: "Complete design, supply, installation, testing, and commissioning of Medical Gas Pipeline System (Oxygen, Vacuum, Air, CO2) with 4-chamber Automatic Cylinder Manifold, 2 Modular Operation Theaters, and 60 Bed Head Panels.",
     completionDate: "January 2025",
     images: ["/images/products/modular-ot.png", "/images/products/manifold-system.png"],
@@ -173,7 +173,7 @@ export const INITIAL_PROJECTS = [
   {
     title: "Chemistry & Research Lab LPG Copper Piping Setup",
     client: "National Science Research Institute",
-    location: "Ch. Sambhaji Nagar, Maharashtra",
+    location: "Chh. Sambhaji Nagar, Maharashtra",
     description: "Custom heavy-duty copper gas pipeline network with Bunsen burner needle valve outlets, instructor safety master shutoff, and automatic LPG leak alarms across 8 science laboratories.",
     completionDate: "August 2024",
     images: ["/images/products/copper-pipe-fittings.png"],

@@ -104,7 +104,7 @@ export default function NewProjectPage() {
               </div>
               <div className="input-group">
                 <label>Location</label>
-                <input name="location" value={form.location} onChange={handleChange} className="input-field" placeholder="Ch. Sambhaji Nagar, MH" />
+                <input name="location" value={form.location} onChange={handleChange} className="input-field" placeholder="Chh. Sambhaji Nagar, MH" />
               </div>
             </div>
             <div className="input-group">

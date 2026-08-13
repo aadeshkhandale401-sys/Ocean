@@ -8,8 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Briefcase, Users, Clock, Package } from "lucide-react";
 import { DEFAULT_SETTINGS } from "@/lib/constants";
-import { getDocument } from "@/lib/firestore";
-import { SiteSettings } from "@/types";
+import { useSettings } from "@/hooks/useSettings";
 
 const statIcons = [Briefcase, Users, Clock, Package];
 
@@ -47,21 +46,8 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
 }
 
 export default function StatsBar() {
-  const [stats, setStats] = useState(DEFAULT_SETTINGS.stats);
-
-  useEffect(() => {
-    async function loadStats() {
-      try {
-        const doc = await getDocument<SiteSettings>("settings", "main");
-        if (doc?.stats?.length) {
-          setStats(doc.stats);
-        }
-      } catch {
-        /* fallback to defaults */
-      }
-    }
-    loadStats();
-  }, []);
+  const settings = useSettings();
+  const stats = settings.stats || DEFAULT_SETTINGS.stats;
 
   return (
     <section

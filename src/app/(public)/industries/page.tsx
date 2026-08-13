@@ -109,7 +109,7 @@ export default function IndustriesPage() {
                   color: "var(--color-primary)",
                 }}
               >
-                <MapPin size={14} /> Ch. Sambhaji Nagar, Maharashtra • Serving Pan-India
+                <MapPin size={14} /> Chh. Sambhaji Nagar, Maharashtra • Serving Pan-India
               </span>
             </div>
             <h1
@@ -218,7 +218,7 @@ export default function IndustriesPage() {
             Planning Medical Gas Infrastructure for Your Facility?
           </h2>
           <p className="text-sm sm:text-base mb-8" style={{ color: "var(--color-text-secondary)" }}>
-            Contact our technical team in Ch. Sambhaji Nagar for site evaluation, BOQ preparation, and IS 7484 safety guidance.
+            Contact our technical team in Chh. Sambhaji Nagar for site evaluation, BOQ preparation, and IS 7484 safety guidance.
           </p>
           <Link href="/contact" className="btn btn-primary btn-lg w-full sm:w-auto justify-center">
             Request Technical Consultation <ArrowRight size={18} />

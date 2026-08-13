@@ -406,7 +406,7 @@ export default function ServicesPage() {
             Need a Customized Solution for Your Hospital?
           </h2>
           <p className="text-sm sm:text-base text-slate-500 mb-8 leading-relaxed">
-            Contact our engineering team in Ch. Sambhaji Nagar for site evaluation, BOQ preparation, and competitive pricing.
+            Contact our engineering team in Chh. Sambhaji Nagar for site evaluation, BOQ preparation, and competitive pricing.
           </p>
           <Link href="/contact" className="inline-flex items-center gap-2 btn btn-primary btn-lg w-full sm:w-auto justify-center rounded-full px-8 py-4 font-bold shadow-md hover:shadow-lg transition-all">
             Request Free Consultation <ArrowRight size={18} />

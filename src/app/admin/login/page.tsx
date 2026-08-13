@@ -98,7 +98,7 @@ export default function AdminLoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="block w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[var(--color-primary)] focus:ring-4 focus:ring-blue-50 outline-none transition-all"
-                  placeholder="admin@oceanmgps.com"
+                  placeholder="admin@oceanmgps.in"
                 />
               </div>
             </div>
@@ -155,7 +155,7 @@ export default function AdminLoginPage() {
         </div>
 
         <p className="text-center text-[11px] text-slate-400 font-medium">
-          © Ocean MGPS Sales & Multi Services • Ch. Sambhaji Nagar
+          © Ocean MGPS Sales & Multi Services • Chh. Sambhaji Nagar
         </p>
       </motion.div>
     </div>

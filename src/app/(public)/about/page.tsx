@@ -1,5 +1,5 @@
 // ============================================
-// About Page — Ocean MGPS (Ch. Sambhaji Nagar)
+// About Page — Ocean MGPS (Chh. Sambhaji Nagar)
 // Clean White Theme & Ultra Responsive Layout
 // ============================================
 
@@ -22,6 +22,7 @@ import {
   Sparkles,
   Stethoscope,
 } from "lucide-react";
+import StatsBar from "@/components/sections/StatsBar";
 
 const values = [
   {
@@ -49,7 +50,7 @@ const values = [
 const milestones = [
   {
     title: "Established Headquarters",
-    description: "Founded in Ch. Sambhaji Nagar, Maharashtra for specialized hospital gas pipeline engineering.",
+    description: "Founded in Chh. Sambhaji Nagar, Maharashtra for specialized hospital gas pipeline engineering.",
   },
   {
     title: "100+ Bed Hospital MGPS",
@@ -73,13 +74,6 @@ const milestones = [
   },
 ];
 
-const quickStats = [
-  { label: "Projects Completed", value: "150+" },
-  { label: "Happy Clients", value: "145+" },
-  { label: "Years Experience", value: "10+" },
-  { label: "Products Available", value: "200+" },
-];
-
 export default function AboutPage() {
   return (
     <>
@@ -99,7 +93,7 @@ export default function AboutPage() {
                 border: "1px solid rgba(21, 101, 192, 0.15)",
               }}
             >
-              <MapPin size={14} /> Ch. Sambhaji Nagar, Maharashtra, India
+              <MapPin size={14} /> Chh. Sambhaji Nagar, Maharashtra, India
             </span>
             <h1
               className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5"
@@ -119,26 +113,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Quick Stats Grid */}
-      <section className="py-8 bg-white border-y border-[var(--color-border-light)]">
-        <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
-            {quickStats.map((stat, i) => (
-              <div key={i} className="p-3 sm:p-4">
-                <span
-                  className="block text-2xl sm:text-3xl font-extrabold"
-                  style={{ color: "var(--color-primary)", fontFamily: "var(--font-display)" }}
-                >
-                  {stat.value}
-                </span>
-                <span className="text-xs sm:text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
-                  {stat.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Stats Bar */}
+      <StatsBar />
 
       {/* Our Story & Milestones Grid — Frameless & Spacious */}
       <section className="section" style={{ background: "var(--color-bg-secondary)" }}>
@@ -165,10 +141,10 @@ export default function AboutPage() {
 
               <div className="space-y-4 text-sm sm:text-base leading-relaxed text-slate-600 font-medium">
                 <p>
-                  Ocean MGPS Sales & Multi Services was founded in Ch. Sambhaji Nagar, Maharashtra, with a clear mission — to provide hospitals, ICUs, and healthcare facilities across India with certified, zero-downtime Medical Gas Pipeline Systems (MGPS).
+                  Ocean MGPS Sales & Multi Services was founded in Chh. Sambhaji Nagar, Maharashtra, with a clear mission — to provide hospitals, ICUs, and healthcare facilities across India with certified, zero-downtime Medical Gas Pipeline Systems (MGPS).
                 </p>
                 <p>
-                  Founded under the vision of Managing Director <strong className="text-slate-900 font-bold">Ganesh Khandale</strong> and technical leadership of Lead Biomedical Engineer <strong className="text-slate-900 font-bold">Adesh Khandale</strong>, our specialized team brings over a decade of hands-on expertise in central gas manifolds, copper piping networks, ICU equipment, and modular OTs.
+                  Founded under the vision of Managing Director <strong className="text-slate-900 font-bold">Ganesh Khandale</strong> and technical leadership of Lead Biomedical Engineer <strong className="text-slate-900 font-bold">Aadesh Khandale</strong>, our specialized team brings over a decade of hands-on expertise in central gas manifolds, copper piping networks, ICU equipment, and modular OTs.
                 </p>
                 <p>
                   From designing central gas manifold banks and medical-grade copper pipeline networks to installing ICU ventilators, patient monitors, and modular OTs, our team ensures 100% compliance with IS 7484 and HTM 02-01 standards.
@@ -388,7 +364,7 @@ export default function AboutPage() {
             Partner with Ocean MGPS Today
           </h2>
           <p className="text-sm sm:text-base mb-8" style={{ color: "var(--color-text-secondary)" }}>
-            Need an MGPS installation estimate or equipment supply catalog? Reach out to our engineering team in Ch. Sambhaji Nagar.
+            Need an MGPS installation estimate or equipment supply catalog? Reach out to our engineering team in Chh. Sambhaji Nagar.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link href="/services" className="btn btn-outline btn-lg w-full sm:w-auto">

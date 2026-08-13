@@ -12,12 +12,12 @@ import { useFirestore } from "@/hooks/useFirestore";
 import { Project } from "@/types";
 
 const staticFallbackProjects: Partial<Project>[] = [
-  { title: "Complete MGPS Installation — Shri Sai Hospital", client: "Shri Sai Hospital", location: "Ch. Sambhaji Nagar, MH", completionDate: "Jan 2025", category: "MGPS Installation", images: ["/images/projects/mgps-installation.png"], videos: [] },
+  { title: "Complete MGPS Installation — Shri Sai Hospital", client: "Shri Sai Hospital", location: "Chh. Sambhaji Nagar, MH", completionDate: "Jan 2025", category: "MGPS Installation", images: ["/images/projects/mgps-installation.png"], videos: [] },
   { title: "Modular OT & MGPS — Lifeline Multi-Specialty", client: "Lifeline Hospital", location: "Pune, MH", completionDate: "Mar 2025", category: "Modular OT Setup", images: ["/images/products/modular-ot.png"], videos: [] },
   { title: "Pipeline Renovation — District General Hospital", client: "District Hospital", location: "Nashik, MH", completionDate: "Nov 2024", category: "Pipeline Work", images: ["/images/projects/mgps-installation.png"], videos: [] },
   { title: "Greenfield MGPS — Apollo Care Hospital", client: "Apollo Care Hospital", location: "Mumbai, MH", completionDate: "Aug 2024", category: "MGPS Installation", images: ["/images/projects/mgps-installation.png"], videos: [] },
   { title: "Equipment Supply — Government Medical College", client: "Government Medical College", location: "Nagpur, MH", completionDate: "Jun 2024", category: "Hospital Setup", images: ["/images/products/manifold-system.png"], videos: [] },
-  { title: "Emergency ICU Expansion — City Care Hospital", client: "City Care Hospital", location: "Ch. Sambhaji Nagar, MH", completionDate: "Feb 2024", category: "MGPS Installation", images: ["/images/products/bed-head-panel.png"], videos: [] },
+  { title: "Emergency ICU Expansion — City Care Hospital", client: "City Care Hospital", location: "Chh. Sambhaji Nagar, MH", completionDate: "Feb 2024", category: "MGPS Installation", images: ["/images/products/bed-head-panel.png"], videos: [] },
 ];
 
 export default function ProjectsPage() {
@@ -25,8 +25,8 @@ export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedProject, setSelectedProject] = useState<Partial<Project> | null>(null);
 
-  // Merge live Firestore projects with fallbacks if database is empty
-  const allProjects = dbProjects.length > 0 ? dbProjects : (staticFallbackProjects as Project[]);
+  // Display live projects; fallback to static items only during initial uninitialized load
+  const allProjects = dbProjects.length > 0 ? dbProjects : (loading ? (staticFallbackProjects as Project[]) : []);
 
   const filtered = allProjects.filter(
     (p) => activeCategory === "All" || p.category === activeCategory
