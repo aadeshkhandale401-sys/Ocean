@@ -172,8 +172,8 @@ const productJsonLd = {
       },
       aggregateRating: {
         "@type": "AggregateRating",
-        ratingValue": "4.9",
-        reviewCount": "89",
+        "ratingValue": "4.9",
+        "reviewCount": "89",
       },
     },
   ],
