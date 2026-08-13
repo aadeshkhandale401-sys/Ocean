@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Our Services — MGPS Installation, Modular OT & Pipeline Maintenance | Sambhaji Nagar & Jalna",
+  title: "Our Services — MGPS Installation, Modular OT & Pipeline Maintenance | Sambhaji Nagar",
   description:
-    "End-to-end medical gas pipeline installation, MGPS maintenance & safety certification, modular OT construction, LPG copper piping, hospital equipment supply, and 24/7 emergency technical support in Chh. Sambhaji Nagar, Jalna, Maharashtra, and across India.",
+    "End-to-end medical gas pipeline installation, MGPS maintenance & safety certification, modular OT construction, LPG copper piping, hospital equipment supply, and 24/7 emergency technical support in Chh. Sambhaji Nagar, Maharashtra, and across India.",
   keywords: [
     "MGPS Installation Service",
     "Medical Gas Pipeline Maintenance",
@@ -20,8 +20,6 @@ export const metadata: Metadata = {
     "Ocean MGPS Services",
     "Chh. Sambhaji Nagar MGPS Service",
     "Chhatrapati Sambhaji Nagar Hospital Pipeline",
-    "Jalna MGPS Installation",
-    "Jalna Medical Gas Service",
     "Maharashtra MGPS Maintenance",
     "Marathwada Hospital Pipeline Services",
     "India MGPS Turnkey Services",
@@ -30,9 +28,9 @@ export const metadata: Metadata = {
     canonical: "/services",
   },
   openGraph: {
-    title: "Our Services — MGPS Installation, Modular OT & Maintenance | Sambhaji Nagar & Jalna",
+    title: "Our Services — MGPS Installation, Modular OT & Maintenance | Sambhaji Nagar",
     description:
-      "Certified medical gas pipeline installation, modular OT setup, MGPS maintenance, pipeline testing, and 24/7 technical support for hospitals in Chh. Sambhaji Nagar, Jalna, Maharashtra & across India.",
+      "Certified medical gas pipeline installation, modular OT setup, MGPS maintenance, pipeline testing, and 24/7 technical support for hospitals in Chh. Sambhaji Nagar, Maharashtra & across India.",
     url: "https://oceanmgps.in/services",
     images: ["/images/projects/mgps-installation.png"],
   },

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { FAQ_ITEMS } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "FAQ — Medical Gas Pipeline System Questions Answered | Sambhaji Nagar & Jalna",
+  title: "FAQ — Medical Gas Pipeline System Questions Answered | Sambhaji Nagar",
   description:
-    "Frequently asked questions about Medical Gas Pipeline Systems (MGPS) in Chh. Sambhaji Nagar, Jalna, Maharashtra, and India: installation timelines, IS 7484 compliance, copper pipeline specifications, manifold maintenance, gas alarm testing, modular OT requirements, and pricing.",
+    "Frequently asked questions about Medical Gas Pipeline Systems (MGPS) in Chh. Sambhaji Nagar, Maharashtra, and India: installation timelines, IS 7484 compliance, copper pipeline specifications, manifold maintenance, gas alarm testing, modular OT requirements, and pricing.",
   keywords: [
     "MGPS FAQ",
     "Medical Gas Pipeline Questions",
@@ -19,8 +19,6 @@ export const metadata: Metadata = {
     "Ocean MGPS FAQ",
     "Chh. Sambhaji Nagar MGPS FAQ",
     "Chhatrapati Sambhaji Nagar Medical Gas",
-    "Jalna MGPS FAQ",
-    "Jalna Hospital Gas Pipeline Questions",
     "Maharashtra MGPS Guidelines",
     "India MGPS Standards",
   ],
@@ -28,9 +26,9 @@ export const metadata: Metadata = {
     canonical: "/faq",
   },
   openGraph: {
-    title: "FAQ — Medical Gas Pipeline System Questions Answered | Sambhaji Nagar & Jalna",
+    title: "FAQ — Medical Gas Pipeline System Questions Answered | Sambhaji Nagar",
     description:
-      "Expert answers to common questions about MGPS installation, IS 7484 compliance, copper pipeline specs, maintenance schedules, and pricing in Chh. Sambhaji Nagar, Jalna, Maharashtra & across India.",
+      "Expert answers to common questions about MGPS installation, IS 7484 compliance, copper pipeline specs, maintenance schedules, and pricing in Chh. Sambhaji Nagar, Maharashtra & across India.",
     url: "https://oceanmgps.in/faq",
   },
 };

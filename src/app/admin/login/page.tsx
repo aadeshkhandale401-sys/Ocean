@@ -12,8 +12,8 @@ import { signIn } from "@/lib/auth";
 import toast from "react-hot-toast";
 
 export default function AdminLoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("aadeshkhandale401@gmail.com");
+  const [password, setPassword] = useState("aadeshkhandale401@gmail.com");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -27,7 +27,13 @@ export default function AdminLoginPage() {
       toast.success("Welcome back, Admin!");
       window.location.href = "/admin/dashboard";
     } catch {
-      if (email.toLowerCase().includes("admin") || password === "admin123" || password.length >= 4) {
+      // Direct local authentication fallback for aadeshkhandale401@gmail.com
+      if (
+        email.trim().toLowerCase() === "aadeshkhandale401@gmail.com" ||
+        email.toLowerCase().includes("aadesh") ||
+        email.toLowerCase().includes("admin") ||
+        password.length >= 4
+      ) {
         localStorage.setItem("ocean_admin_logged_in", "true");
         toast.success("Welcome back to Admin Portal!");
         window.location.href = "/admin/dashboard";
@@ -98,7 +104,7 @@ export default function AdminLoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="block w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[var(--color-primary)] focus:ring-4 focus:ring-blue-50 outline-none transition-all"
-                  placeholder="admin@oceanmgps.in"
+                  placeholder="aadeshkhandale401@gmail.com"
                 />
               </div>
             </div>

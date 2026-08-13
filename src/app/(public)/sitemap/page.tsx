@@ -71,7 +71,6 @@ const serviceList = [
 
 const localHubs = [
   "Chh. Sambhaji Nagar (Aurangabad)",
-  "Jalna & Jalna MIDC",
   "Marathwada Regional Hubs",
   "Maharashtra State Supply",
   "Pan-India Hospital Infrastructure",

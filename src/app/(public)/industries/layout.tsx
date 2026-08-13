@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Industries We Serve — Hospitals, Labs, Hotels & Manufacturing | Sambhaji Nagar & Jalna",
+  title: "Industries We Serve — Hospitals, Labs, Hotels & Manufacturing | Sambhaji Nagar",
   description:
-    "Ocean MGPS serves multi-specialty hospitals, ICUs, research laboratories, dental clinics, veterinary hospitals, hotels, commercial kitchens, educational institutions, and manufacturing plants in Chh. Sambhaji Nagar, Jalna, Maharashtra, and across India.",
+    "Ocean MGPS serves multi-specialty hospitals, ICUs, research laboratories, dental clinics, veterinary hospitals, hotels, commercial kitchens, educational institutions, and manufacturing plants in Chh. Sambhaji Nagar, Maharashtra, and across India.",
   keywords: [
     "Hospital Gas Pipeline",
     "ICU Gas Pipeline System",
@@ -18,8 +18,6 @@ export const metadata: Metadata = {
     "Ocean MGPS Industries",
     "Chh. Sambhaji Nagar Industries",
     "Chhatrapati Sambhaji Nagar Hospitals",
-    "Jalna Hospitals MGPS",
-    "Jalna Industrial LPG Piping",
     "Maharashtra Hospital Sector Supply",
     "India Medical Gas Infrastructure",
   ],
@@ -27,9 +25,9 @@ export const metadata: Metadata = {
     canonical: "/industries",
   },
   openGraph: {
-    title: "Industries We Serve — Hospitals, Labs, Hotels & Manufacturing | Sambhaji Nagar & Jalna",
+    title: "Industries We Serve — Hospitals, Labs, Hotels & Manufacturing | Sambhaji Nagar",
     description:
-      "Certified medical gas pipeline systems and LPG piping for hospitals, ICUs, labs, dental clinics, hotels, and manufacturing plants in Chh. Sambhaji Nagar, Jalna, Maharashtra & across India.",
+      "Certified medical gas pipeline systems and LPG piping for hospitals, ICUs, labs, dental clinics, hotels, and manufacturing plants in Chh. Sambhaji Nagar, Maharashtra & across India.",
     url: "https://oceanmgps.in/industries",
   },
 };

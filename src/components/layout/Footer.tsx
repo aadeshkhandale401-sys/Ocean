@@ -169,9 +169,6 @@ export default function Footer() {
             <Link href="/products" className="hover:text-[var(--color-primary)] no-underline">Oxygen Manifold in Sambhaji Nagar</Link> • 
             <Link href="/services" className="hover:text-[var(--color-primary)] no-underline">Modular OT Setup in Sambhaji Nagar</Link> • 
             <Link href="/lpg" className="hover:text-[var(--color-primary)] no-underline">LPG Gas Piping in Sambhaji Nagar</Link> • 
-            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">MGPS in Jalna</Link> • 
-            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">Medical Gas Pipeline in Jalna</Link> • 
-            <Link href="/products" className="hover:text-[var(--color-primary)] no-underline">Medical Equipment in Jalna</Link> • 
             <Link href="/services" className="hover:text-[var(--color-primary)] no-underline">Hospital Gas Pipeline Maintenance Maharashtra</Link> • 
             <Link href="/products" className="hover:text-[var(--color-primary)] no-underline">ICU Equipment Supplier India</Link>
           </div>

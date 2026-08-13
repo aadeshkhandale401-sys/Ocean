@@ -121,7 +121,7 @@ function ContactFormContent() {
             Reach Our Engineering Office Directly
           </h2>
           <p className="text-sm text-slate-500 mt-2 leading-relaxed">
-            Our technical team in Chh. Sambhaji Nagar (Aurangabad) & Jalna is available for free site surveys, BOQ estimation, and emergency support across Maharashtra & India.
+            Our technical team in Chh. Sambhaji Nagar (Aurangabad) is available for free site surveys, BOQ estimation, and emergency support across Maharashtra & India.
           </p>
         </div>
 

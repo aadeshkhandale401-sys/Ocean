@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Medical Gas Pipeline System (MGPS) — Complete Guide & Installation | Sambhaji Nagar & Jalna",
+  title: "Medical Gas Pipeline System (MGPS) — Complete Guide & Installation | Sambhaji Nagar",
   description:
-    "Learn about Medical Gas Pipeline Systems (MGPS): centralized oxygen, nitrous oxide, medical air, and vacuum supply for hospitals in Chh. Sambhaji Nagar, Jalna, Maharashtra, and across India. IS 7484 compliant copper pipeline networks with automatic manifold banks, zone valve boxes, and gas alarm systems.",
+    "Learn about Medical Gas Pipeline Systems (MGPS): centralized oxygen, nitrous oxide, medical air, and vacuum supply for hospitals in Chh. Sambhaji Nagar, Maharashtra, and across India. IS 7484 compliant copper pipeline networks with automatic manifold banks, zone valve boxes, and gas alarm systems.",
   keywords: [
     "Medical Gas Pipeline System",
     "MGPS",
@@ -24,8 +24,6 @@ export const metadata: Metadata = {
     "Ocean MGPS",
     "Chh. Sambhaji Nagar MGPS",
     "Chhatrapati Sambhaji Nagar Gas Pipeline",
-    "Jalna MGPS",
-    "Jalna Hospital Oxygen Pipeline",
     "Maharashtra Hospital Gas Pipeline",
     "Marathwada MGPS Turnkey Provider",
     "India Medical Engineering Contractor",
@@ -34,9 +32,9 @@ export const metadata: Metadata = {
     canonical: "/mgps",
   },
   openGraph: {
-    title: "MGPS — Medical Gas Pipeline System Guide & Installation | Sambhaji Nagar & Jalna",
+    title: "MGPS — Medical Gas Pipeline System Guide & Installation | Sambhaji Nagar",
     description:
-      "Complete guide to Medical Gas Pipeline Systems: centralized oxygen, vacuum, and medical air supply with IS 7484 compliant copper piping. Turnkey installation in Chh. Sambhaji Nagar, Jalna, Maharashtra & across India.",
+      "Complete guide to Medical Gas Pipeline Systems: centralized oxygen, vacuum, and medical air supply with IS 7484 compliant copper piping. Turnkey installation in Chh. Sambhaji Nagar, Maharashtra & across India.",
     url: "https://oceanmgps.in/mgps",
     images: ["/images/projects/mgps-installation.png"],
   },

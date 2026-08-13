@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Ocean MGPS — Get Free MGPS Site Survey & BOQ Estimate | Sambhaji Nagar & Jalna",
+  title: "Contact Ocean MGPS — Get Free MGPS Site Survey & BOQ Estimate | Sambhaji Nagar",
   description:
-    "Contact Ocean MGPS Sales & Multi Services for free site surveys, BOQ preparation, technical consultations, and quotations in Chh. Sambhaji Nagar, Jalna, Maharashtra, and across India. Call +91 8698648386 / 8007515182 / 7775904214. Office: Mukund Wadi, N-2, CIDCO, Chh. Sambhaji Nagar, MH.",
+    "Contact Ocean MGPS Sales & Multi Services for free site surveys, BOQ preparation, technical consultations, and quotations in Chh. Sambhaji Nagar, Maharashtra, and across India. Call +91 8698648386 / 8007515182 / 7775904214. Office: Mukund Wadi, N-2, CIDCO, Chh. Sambhaji Nagar, MH.",
   keywords: [
     "Contact Ocean MGPS",
     "MGPS Quotation",
@@ -16,8 +16,6 @@ export const metadata: Metadata = {
     "Ocean MGPS Email",
     "Chh. Sambhaji Nagar Contact",
     "Chhatrapati Sambhaji Nagar MGPS Contact",
-    "Jalna MGPS Contact",
-    "Jalna Hospital Equipment Quote",
     "Maharashtra MGPS Supplier Contact",
     "India Medical Gas Pipeline Contact",
   ],
@@ -25,9 +23,9 @@ export const metadata: Metadata = {
     canonical: "/contact",
   },
   openGraph: {
-    title: "Contact Ocean MGPS — Free Site Survey & BOQ Estimate | Sambhaji Nagar & Jalna",
+    title: "Contact Ocean MGPS — Free Site Survey & BOQ Estimate | Sambhaji Nagar",
     description:
-      "Get a free site survey, BOQ estimate, and competitive quotation for MGPS installation, hospital equipment, and modular OTs in Chh. Sambhaji Nagar, Jalna, Maharashtra & across India.",
+      "Get a free site survey, BOQ estimate, and competitive quotation for MGPS installation, hospital equipment, and modular OTs in Chh. Sambhaji Nagar, Maharashtra & across India.",
     url: "https://oceanmgps.in/contact",
   },
 };

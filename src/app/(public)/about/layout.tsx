@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Ocean MGPS — Certified Medical Gas Pipeline Engineers | Sambhaji Nagar & Jalna",
+  title: "About Ocean MGPS — Certified Medical Gas Pipeline Engineers | Sambhaji Nagar",
   description:
-    "Ocean MGPS Sales & Multi Services — Headquartered in Chh. Sambhaji Nagar, serving Jalna, Maharashtra, and pan-India. 150+ completed hospital projects, 12+ years experience. Led by MD Ganesh Khandale and Biomedical Engineer Aadesh Khandale.",
+    "Ocean MGPS Sales & Multi Services — Headquartered in Chh. Sambhaji Nagar, serving Maharashtra and pan-India. 150+ completed hospital projects, 12+ years experience. Led by MD Ganesh Khandale and Biomedical Engineer Aadesh Khandale.",
   keywords: [
     "About Ocean MGPS",
     "Ocean MGPS Sales Multi Services",
@@ -15,8 +15,6 @@ export const metadata: Metadata = {
     "Medical Gas Pipeline Company",
     "Chh. Sambhaji Nagar",
     "Chhatrapati Sambhaji Nagar MGPS",
-    "Jalna MGPS Installer",
-    "Jalna Hospital Gas Pipeline",
     "Aurangabad MGPS",
     "Maharashtra Hospital Equipment Supplier",
     "Marathwada Medical Gas Engineers",
@@ -26,9 +24,9 @@ export const metadata: Metadata = {
     canonical: "/about",
   },
   openGraph: {
-    title: "About Ocean MGPS — Certified Medical Gas Pipeline Engineers | Sambhaji Nagar & Jalna",
+    title: "About Ocean MGPS — Certified Medical Gas Pipeline Engineers | Sambhaji Nagar",
     description:
-      "150+ projects completed. 12+ years experience. Certified MGPS installers serving hospitals in Chh. Sambhaji Nagar, Jalna, Maharashtra & across India.",
+      "150+ projects completed. 12+ years experience. Certified MGPS installers serving hospitals in Chh. Sambhaji Nagar, Maharashtra & across India.",
     url: "https://oceanmgps.in/about",
     images: ["/images/projects/mgps-installation.png"],
   },

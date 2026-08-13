@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "LPG Copper Gas Pipeline — Residential & Commercial Installation | Sambhaji Nagar & Jalna",
+  title: "LPG Copper Gas Pipeline — Residential & Commercial Installation | Sambhaji Nagar",
   description:
-    "Professional LPG copper gas pipeline installation for apartments, hotels, restaurants, hostels, laboratories, and industrial kitchens in Chh. Sambhaji Nagar, Jalna, Maharashtra, and across India. Leak-proof copper piping with individual gas meters and safety shutoff valves.",
+    "Professional LPG copper gas pipeline installation for apartments, hotels, restaurants, hostels, laboratories, and industrial kitchens in Chh. Sambhaji Nagar, Maharashtra, and across India. Leak-proof copper piping with individual gas meters and safety shutoff valves.",
   keywords: [
     "LPG Gas Pipeline",
     "LPG Copper Piping",
@@ -22,8 +22,6 @@ export const metadata: Metadata = {
     "Ocean MGPS LPG",
     "Chh. Sambhaji Nagar LPG Pipeline",
     "Chhatrapati Sambhaji Nagar Gas Piping",
-    "Jalna LPG Pipeline",
-    "Jalna Commercial Gas Piping",
     "Maharashtra LPG Copper Pipeline",
     "Marathwada Gas Pipeline Installer",
   ],
@@ -31,9 +29,9 @@ export const metadata: Metadata = {
     canonical: "/lpg",
   },
   openGraph: {
-    title: "LPG Copper Gas Pipeline — Residential & Commercial Installation | Sambhaji Nagar & Jalna",
+    title: "LPG Copper Gas Pipeline — Residential & Commercial Installation | Sambhaji Nagar",
     description:
-      "Professional LPG copper gas pipeline installation for apartments, hotels, restaurants, labs, and industrial kitchens in Chh. Sambhaji Nagar, Jalna, Maharashtra & across India.",
+      "Professional LPG copper gas pipeline installation for apartments, hotels, restaurants, labs, and industrial kitchens in Chh. Sambhaji Nagar, Maharashtra & across India.",
     url: "https://oceanmgps.in/lpg",
     images: ["/images/products/copper-pipe-fittings.png"],
   },

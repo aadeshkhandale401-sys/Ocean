@@ -70,7 +70,7 @@ export default function Hero() {
               <span className="font-extrabold text-cyan-300 lg:text-[var(--color-primary)]">
                 Medical Gas Pipeline Systems (MGPS), medical equipment & hospital hardware
               </span>{" "}
-              in Chh. Sambhaji Nagar (Aurangabad), Jalna, Maharashtra & across India.
+              in Chh. Sambhaji Nagar (Aurangabad), Maharashtra & across India.
             </p>
 
             {/* CTA Buttons */}

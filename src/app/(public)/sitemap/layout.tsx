@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "HTML Sitemap — Ocean MGPS Website Directory",
     description:
-      "Complete site map and link directory for Ocean MGPS products, services, guides, and regional hubs in Chh. Sambhaji Nagar, Jalna, Maharashtra & India.",
+      "Complete site map and link directory for Ocean MGPS products, services, guides, and regional hubs in Chh. Sambhaji Nagar, Maharashtra & India.",
     url: "https://oceanmgps.in/sitemap",
   },
 };

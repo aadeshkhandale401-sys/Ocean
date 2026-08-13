@@ -544,7 +544,7 @@ export default function MGPSPage() {
             Planning an MGPS Installation for Your Hospital?
           </h2>
           <p className="text-sm sm:text-base mb-8 text-slate-500 font-medium">
-            Our engineering team in Chh. Sambhaji Nagar (Aurangabad) & Jalna assists with architectural CAD planning, pipeline sizing, and BOQ estimation across Maharashtra and India.
+            Our engineering team in Chh. Sambhaji Nagar (Aurangabad) assists with architectural CAD planning, pipeline sizing, and BOQ estimation across Maharashtra and India.
           </p>
           <Link href="/contact" className="btn btn-primary btn-lg w-full sm:w-auto justify-center">
             Request Technical Proposal <ArrowRight size={18} />

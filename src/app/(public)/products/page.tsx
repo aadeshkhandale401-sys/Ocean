@@ -83,10 +83,10 @@ export default function ProductsPage() {
               className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
               style={{ fontFamily: "var(--font-display)", color: "var(--color-primary-dark)" }}
             >
-              Our <span className="text-gradient">Products</span>
+              Medical Equipments in <span className="text-gradient">Sambhaji Nagar</span>
             </h1>
-            <p className="text-base sm:text-lg mb-6" style={{ color: "var(--color-text-secondary)" }}>
-              Complete range of hospital gas supply systems & equipment. Tap any item to inspect technical specifications.
+            <p className="text-base sm:text-lg mb-6 leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+              Complete range of hospital hardware, ICU patient monitors, ECG machines, ventilators, bed head panels, manifold systems, and certified medical equipments in Chh. Sambhaji Nagar (Aurangabad), Maharashtra & pan-India.
             </p>
 
             {/* Search Bar Wrapper */}

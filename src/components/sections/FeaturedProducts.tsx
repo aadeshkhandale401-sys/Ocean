@@ -39,8 +39,8 @@ export default function FeaturedProducts() {
       <div className="container">
         {/* Section Heading */}
         <div className="section-heading">
-          <h2>Our Products & Equipment</h2>
-          <p>Hospital-grade medical gas pipeline equipment engineered to IS 7484 safety standards</p>
+          <h2>Medical Equipments & Hospital Supplies</h2>
+          <p>Hospital-grade medical gas pipeline equipment, ICU monitors, ECG machines & ventilators in Chh. Sambhaji Nagar (Aurangabad)</p>
         </div>
 
         {/* Quick Filter Bar — Unboxed */}
