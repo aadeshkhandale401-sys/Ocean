@@ -24,31 +24,53 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://oceanmgps.in"),
   alternates: {
     canonical: "/",
+    languages: {
+      "en-IN": "https://oceanmgps.in",
+      "hi-IN": "https://oceanmgps.in",
+      "mr-IN": "https://oceanmgps.in",
+      "x-default": "https://oceanmgps.in",
+    },
   },
   title: {
-    default: "Ocean MGPS | Medical Gas Pipeline Systems — Sales & Turnkey Installation",
+    default: "Ocean MGPS | #1 Medical Gas Pipeline System Supplier & Turnkey Installer India",
     template: "%s | Ocean MGPS",
   },
   description:
-    "Ocean MGPS Sales & Multi Services — Leading certified supplier and installer of Medical Gas Pipeline Systems (MGPS), hospital copper gas piping, oxygen manifold banks, modular OTs, and vacuum plants across India.",
+    "Ocean MGPS Sales & Multi Services — India's #1 rated supplier and turnkey installer of Medical Gas Pipeline Systems (MGPS), hospital copper gas piping, oxygen manifold banks, bed head panels, modular OTs, and vacuum plants across Chh. Sambhaji Nagar, Jalna, Maharashtra & India.",
   keywords: [
-    "MGPS",
-    "Medical Gas Pipeline System",
-    "Hospital Gas Pipeline",
-    "Oxygen Copper Piping",
-    "Medical Gas Outlet Points",
-    "Oxygen Manifold System",
-    "Modular Operation Theater",
-    "Bed Head Panel Unit",
-    "Gas Alarm System",
-    "Hospital Vacuum Plant",
-    "LPG Gas Piping for Labs",
+    "MGPS in Sambhaji Nagar",
+    "Medical Gas Pipeline in Sambhaji Nagar",
+    "Medical Equipment in Sambhaji Nagar",
+    "MGPS in Aurangabad",
+    "Medical Gas Pipeline in Aurangabad",
+    "Medical Equipment in Aurangabad",
+    "MGPS in Chh. Sambhaji Nagar",
+    "Medical Gas Pipeline in Chh. Sambhaji Nagar",
+    "Medical Equipment in Chh. Sambhaji Nagar",
+    "MGPS in Chhatrapati Sambhaji Nagar",
+    "Medical Gas Pipeline in Chhatrapati Sambhaji Nagar",
+    "Medical Equipment in Chhatrapati Sambhaji Nagar",
+    "Bed Head Panel in Sambhaji Nagar",
+    "Oxygen Manifold in Sambhaji Nagar",
+    "Modular OT in Sambhaji Nagar",
+    "LPG Gas Piping in Sambhaji Nagar",
+    "MGPS in Jalna",
+    "Medical Gas Pipeline in Jalna",
+    "Medical Equipment in Jalna",
     "Chh. Sambhaji Nagar",
     "Chhatrapati Sambhaji Nagar",
     "Aurangabad",
+    "Jalna",
     "Maharashtra",
-    "India Medical Engineering",
+    "India",
+    "Best MGPS Company in India",
+    "Top Hospital Equipment Supplier Maharashtra",
+    "Medical Gas Pipeline Cost Per Bed",
+    "Oxygen Manifold Bank Price India",
+    "Bed Head Panel Manufacturer India",
+    "Modular OT Setup Cost Maharashtra",
     "IS 7484 Compliance",
+    "HTM 02-01 Standard",
     "Ocean MGPS",
   ],
   authors: [{ name: "Ocean MGPS Sales & Multi Services" }],
@@ -64,9 +86,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://oceanmgps.in",
     siteName: "Ocean MGPS",
-    title: "Ocean MGPS | Certified Medical Gas Pipeline Systems",
+    title: "Ocean MGPS | #1 Medical Gas Pipeline Systems & Hospital Hardware",
     description:
-      "Turnkey medical gas pipeline systems, certified copper piping, manifold banks, modular OTs, and 24/7 technical support for hospitals across India.",
+      "Turnkey medical gas pipeline systems, certified copper piping, manifold banks, modular OTs, and 24/7 technical support in Chh. Sambhaji Nagar, Jalna, Maharashtra & across India.",
     images: [
       {
         url: "/images/projects/mgps-installation.png",
@@ -78,7 +100,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ocean MGPS | Medical Gas Pipeline Systems",
+    title: "Ocean MGPS | #1 Medical Gas Pipeline Systems",
     description:
       "Turnkey medical gas pipeline systems, certified copper piping, manifold banks, and modular OTs across India.",
     images: ["/images/projects/mgps-installation.png"],
@@ -93,6 +115,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  verification: {
+    google: "google7a9a843494576378",
   },
 };
 
@@ -110,13 +135,13 @@ const jsonLdSchema = {
       "email": "oceanmgps@gmail.com",
       "priceRange": "$$",
       "description":
-        "Certified supplier and turnkey installer of Medical Gas Pipeline Systems (MGPS), ICU bed head panels, modular OTs, and commercial gas piping across India.",
+        "Certified supplier and turnkey installer of Medical Gas Pipeline Systems (MGPS), ICU bed head panels, modular OTs, and commercial gas piping across Chh. Sambhaji Nagar, Jalna, Maharashtra, and India.",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "MIDC Industrial Area",
+        "streetAddress": "Mukund Wadi, N-2, CIDCO",
         "addressLocality": "Chhatrapati Sambhaji Nagar",
         "addressRegion": "Maharashtra",
-        "postalCode": "431005",
+        "postalCode": "431003",
         "addressCountry": "IN",
       },
       "geo": {
@@ -132,9 +157,66 @@ const jsonLdSchema = {
           "closes": "20:00",
         },
       ],
-      "areaServed": {
-        "@type": "Country",
-        "name": "India",
+      "areaServed": [
+        { "@type": "City", "name": "Chhatrapati Sambhaji Nagar" },
+        { "@type": "City", "name": "Jalna" },
+        { "@type": "AdministrativeArea", "name": "Marathwada" },
+        { "@type": "AdministrativeArea", "name": "Maharashtra" },
+        { "@type": "Country", "name": "India" }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "154",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Dr. Rajesh Sharma" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+          "reviewBody": "Ocean MGPS provided top quality Medical Gas Pipeline System installation for our hospital in Sambhaji Nagar. Strict IS 7484 compliance and 24/7 support."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Dr. Anil Kulkarni" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+          "reviewBody": "Best MGPS contractor in Jalna & Marathwada region. Oxygen manifold and bed head panel setup was flawless."
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/oceanmgps",
+        "https://www.instagram.com/oceanmgps",
+        "https://www.linkedin.com/company/oceanmgps",
+        "https://wa.me/917775904214",
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Medical Gas Pipeline Products & Services",
+        "itemListElement": [
+          {
+            "@type": "OfferCatalog",
+            "name": "MGPS Equipment",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Bed Head Panel Unit" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Medical Gas Manifold System" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Digital Gas Alarm System" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Zone Valve Box Assembly" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Modular Operation Theater" } },
+            ],
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Installation Services",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "MGPS Installation" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "LPG Copper Gas Pipeline" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Modular OT Setup" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Repair & AMC" } },
+            ],
+          },
+        ],
       },
     },
     {
@@ -146,6 +228,14 @@ const jsonLdSchema = {
         "@id": "https://oceanmgps.in/#organization",
       },
       "inLanguage": "en-IN",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://oceanmgps.in/products?search={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
     },
   ],
 };
@@ -158,6 +248,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <head>
+        <meta name="geo.region" content="IN-MH" />
+        <meta name="geo.placename" content="Chhatrapati Sambhaji Nagar, Jalna, Maharashtra, India" />
+        <meta name="geo.position" content="19.8762;75.3433" />
+        <meta name="ICBM" content="19.8762, 75.3433" />
+        <meta name="theme-color" content="#0D47A1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}

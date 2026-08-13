@@ -18,6 +18,7 @@ const quickLinks = [
   { label: "Our Products", href: "/products" },
   { label: "Our Projects", href: "/projects" },
   { label: "Contact Us", href: "/contact" },
+  { label: "HTML Sitemap", href: "/sitemap" },
 ];
 
 const serviceLinks = [
@@ -137,6 +138,42 @@ export default function Footer() {
                 </span>
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Local SEO Service Hubs & Search Keywords */}
+      <div className="py-8 border-t border-slate-100 bg-slate-50/50">
+        <div className="container space-y-4">
+          <h5 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+            Top Service Locations & Local Search Hubs
+          </h5>
+          <div className="flex flex-wrap gap-2 text-[11px] text-slate-500 leading-relaxed">
+            <span className="font-semibold text-slate-700">Chh. Sambhaji Nagar / Aurangabad:</span>
+            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">MGPS in Sambhaji Nagar</Link> • 
+            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">Medical Gas Pipeline in Sambhaji Nagar</Link> • 
+            <Link href="/products" className="hover:text-[var(--color-primary)] no-underline">Medical Equipment in Sambhaji Nagar</Link> • 
+            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">MGPS in Aurangabad</Link> • 
+            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">Medical Gas Pipeline in Aurangabad</Link> • 
+            <Link href="/products" className="hover:text-[var(--color-primary)] no-underline">Medical Equipment in Aurangabad</Link> • 
+            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">MGPS in Chh. Sambhaji Nagar</Link> • 
+            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">Medical Gas Pipeline in Chh. Sambhaji Nagar</Link> • 
+            <Link href="/products" className="hover:text-[var(--color-primary)] no-underline">Medical Equipment in Chh. Sambhaji Nagar</Link> • 
+            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">MGPS in Chhatrapati Sambhaji Nagar</Link> • 
+            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">Medical Gas Pipeline in Chhatrapati Sambhaji Nagar</Link> • 
+            <Link href="/products" className="hover:text-[var(--color-primary)] no-underline">Medical Equipment in Chhatrapati Sambhaji Nagar</Link>
+          </div>
+          <div className="flex flex-wrap gap-2 text-[11px] text-slate-500 leading-relaxed pt-1">
+            <span className="font-semibold text-slate-700">Equipment & Services by Region:</span>
+            <Link href="/products" className="hover:text-[var(--color-primary)] no-underline">Bed Head Panel in Sambhaji Nagar</Link> • 
+            <Link href="/products" className="hover:text-[var(--color-primary)] no-underline">Oxygen Manifold in Sambhaji Nagar</Link> • 
+            <Link href="/services" className="hover:text-[var(--color-primary)] no-underline">Modular OT Setup in Sambhaji Nagar</Link> • 
+            <Link href="/lpg" className="hover:text-[var(--color-primary)] no-underline">LPG Gas Piping in Sambhaji Nagar</Link> • 
+            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">MGPS in Jalna</Link> • 
+            <Link href="/mgps" className="hover:text-[var(--color-primary)] no-underline">Medical Gas Pipeline in Jalna</Link> • 
+            <Link href="/products" className="hover:text-[var(--color-primary)] no-underline">Medical Equipment in Jalna</Link> • 
+            <Link href="/services" className="hover:text-[var(--color-primary)] no-underline">Hospital Gas Pipeline Maintenance Maharashtra</Link> • 
+            <Link href="/products" className="hover:text-[var(--color-primary)] no-underline">ICU Equipment Supplier India</Link>
           </div>
         </div>
       </div>

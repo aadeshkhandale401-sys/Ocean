@@ -64,13 +64,13 @@ export default function Hero() {
 
             {/* Subtext */}
             <p
-              className="text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 max-w-[520px] text-blue-100/90 lg:text-[var(--color-text-secondary)]"
+              className="text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 max-w-[540px] text-blue-100/90 lg:text-[var(--color-text-secondary)]"
             >
-              Highly specialized stockist, supplier & installer of complete hospital
-              gas supply systems, modular operation theaters, and{" "}
+              Highly specialized supplier & turnkey installer of certified{" "}
               <span className="font-extrabold text-cyan-300 lg:text-[var(--color-primary)]">
-                medical equipment across India.
-              </span>
+                Medical Gas Pipeline Systems (MGPS), medical equipment & hospital hardware
+              </span>{" "}
+              in Chh. Sambhaji Nagar (Aurangabad), Jalna, Maharashtra & across India.
             </p>
 
             {/* CTA Buttons */}

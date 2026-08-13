@@ -76,11 +76,25 @@ function ContactFormContent() {
 
     setSubmitting(true);
     try {
+      // 1. Submit to Web3Forms API for instant email notification
+      const { submitToWeb3Forms } = await import("@/lib/web3forms");
+      await submitToWeb3Forms({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        organization: formData.organization,
+        serviceInterest: formData.serviceInterest,
+        message: formData.message,
+        source: "Contact Page Enquiry Form",
+      });
+
+      // 2. Save enquiry to Firestore / Local database for Admin Dashboard tracking
       const { addDocument } = await import("@/lib/firestore");
       await addDocument("enquiries", {
         ...formData,
         status: "new",
       });
+
       setSubmitted(true);
       toast.success("Thank you! Your enquiry has been submitted successfully.");
     } catch {
@@ -107,7 +121,7 @@ function ContactFormContent() {
             Reach Our Engineering Office Directly
           </h2>
           <p className="text-sm text-slate-500 mt-2 leading-relaxed">
-            Our technical team in Chh. Sambhaji Nagar is available for site surveys, BOQ preparation, and emergency support.
+            Our technical team in Chh. Sambhaji Nagar (Aurangabad) & Jalna is available for free site surveys, BOQ estimation, and emergency support across Maharashtra & India.
           </p>
         </div>
 
