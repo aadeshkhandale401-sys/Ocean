@@ -68,7 +68,7 @@ export default function Hero() {
             >
               Highly specialized stockist, supplier & installer of complete hospital
               gas supply systems, modular operation theaters, and{" "}
-              <span className="font-extrabold text-blue-950 lg:text-[var(--color-primary-dark)]">
+              <span className="font-extrabold text-cyan-300 lg:text-[var(--color-primary)]">
                 medical equipment across India.
               </span>
             </p>
