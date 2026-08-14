@@ -1,5 +1,5 @@
 // ============================================
-// Stats Bar — Animated Counters
+// Stats Bar — Animated & Translation-Safe Counters
 // ============================================
 
 "use client";
@@ -12,42 +12,49 @@ import { useSettings } from "@/hooks/useSettings";
 
 const statIcons = [Briefcase, Users, Clock, Package];
 
-function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+function AnimatedCounter({ value, suffix }: { value: number | string; suffix?: string }) {
+  const targetValue = Math.max(0, parseInt(String(value), 10) || 0);
+  const [count, setCount] = useState<number>(targetValue);
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "0px" });
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!hasAnimated && isInView && targetValue > 0) {
+      setHasAnimated(true);
+      let start = 0;
+      const duration = 1500;
+      const step = Math.max(1, Math.ceil(targetValue / (duration / 16)));
 
-    let start = 0;
-    const duration = 2000;
-    const step = value / (duration / 16);
+      const timer = setInterval(() => {
+        start += step;
+        if (start >= targetValue) {
+          setCount(targetValue);
+          clearInterval(timer);
+        } else {
+          setCount(start);
+        }
+      }, 16);
 
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= value) {
-        setCount(value);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-
-    return () => clearInterval(timer);
-  }, [isInView, value]);
+      return () => clearInterval(timer);
+    } else if (!hasAnimated) {
+      setCount(targetValue);
+    }
+  }, [isInView, targetValue, hasAnimated]);
 
   return (
-    <span ref={ref} className="tabular-nums">
-      {count}
-      {suffix}
+    <span ref={ref} translate="no" className="notranslate tabular-nums inline-block">
+      {count > 0 ? count : targetValue}
+      {suffix || "+"}
     </span>
   );
 }
 
 export default function StatsBar() {
   const settings = useSettings();
-  const stats = settings.stats || DEFAULT_SETTINGS.stats;
+  const stats = (settings && settings.stats && settings.stats.length > 0) 
+    ? settings.stats 
+    : DEFAULT_SETTINGS.stats;
 
   return (
     <section
@@ -62,6 +69,10 @@ export default function StatsBar() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
           {stats.map((stat, i) => {
             const Icon = statIcons[i % statIcons.length];
+            const fallbackValue = DEFAULT_SETTINGS.stats[i]?.value || 100;
+            const finalValue = stat?.value ?? fallbackValue;
+            const finalSuffix = stat?.suffix ?? "+";
+
             return (
               <motion.div
                 key={i}
@@ -79,7 +90,7 @@ export default function StatsBar() {
                     color: "var(--color-primary-dark)",
                   }}
                 >
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                  <AnimatedCounter value={finalValue} suffix={finalSuffix} />
                 </span>
                 <span
                   className="text-sm font-medium"
