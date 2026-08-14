@@ -62,7 +62,7 @@ export const DEFAULT_SETTINGS = {
   tagline: "MGPS Installer | Sales & Multi Services",
   about:
     "We are a highly specialized stockist, supplier, and installer of Medical Gas Pipeline Systems and hospital equipment. Serving healthcare facilities across India with quality products and expert installation services.",
-  address: "Mukund wadi, N-2, CIDCO, Chh. Sambhaji Nagar, Maharashtra, India",
+  address: "MIDC Industrial Area, Mukundwadi, Chhatrapati Sambhajinagar, Maharashtra 431006, India",
   phones: ["8698648386", "8007515182", "7775904214"],
   email: "oceanmgps@gmail.com",
   whatsapp: "917775904214",
