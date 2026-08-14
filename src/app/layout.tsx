@@ -139,17 +139,16 @@ const jsonLdSchema = {
         "Certified supplier and turnkey installer of Medical Gas Pipeline Systems (MGPS), ICU bed head panels, modular OTs, and commercial gas piping across Chh. Sambhaji Nagar, Maharashtra, and India.",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "MIDC Industrial Area, Mukundwadi",
+        "streetAddress": "Mukund Wadi, N-2, CIDCO",
         "addressLocality": "Chhatrapati Sambhaji Nagar",
         "addressRegion": "Maharashtra",
-        "postalCode": "431006",
+        "postalCode": "431003",
         "addressCountry": "IN",
       },
-      "hasMap": "https://maps.app.goo.gl/LZJodviBcYUcRdzr7",
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": 19.8741,
-        "longitude": 75.3789,
+        "latitude": 19.8762,
+        "longitude": 75.3433,
       },
       "openingHoursSpecification": [
         {

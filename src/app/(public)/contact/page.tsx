@@ -419,7 +419,7 @@ export default function ContactPage() {
       <section className="section pt-0 pb-20" style={{ background: "var(--color-bg-secondary)" }}>
         <div className="container max-w-6xl">
           <div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-200/80">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200/80">
               <div>
                 <h3
                   className="text-lg sm:text-xl font-bold text-slate-900"
@@ -428,29 +428,24 @@ export default function ContactPage() {
                   Our Headquarters Location
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  MIDC Industrial Area, Mukundwadi, Chh. Sambhaji Nagar, Maharashtra 431006, India
+                  Chh. Sambhaji Nagar, Maharashtra 431005, India | Mon - Sat: 9:00 AM - 7:00 PM
                 </p>
               </div>
-              <a
-                href="https://maps.app.goo.gl/LZJodviBcYUcRdzr7"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline btn-sm rounded-xl text-xs font-bold gap-1.5 self-start sm:self-auto"
-              >
-                <MapPin size={14} /> Open in Google Maps
-              </a>
+              <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-600 hidden sm:inline-block">
+                Map View
+              </span>
             </div>
 
             <div className="rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200/80 shadow-xs">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3752.176045974052!2d75.3789!3d19.8741!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdba3867256c413%3A0xb815fca3e276a098!2sOcean%20MGPS%20sales%20and%20Multy%20Services!5e0!3m2!1sen!2sin!4v1700000000000"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3752.0!2d75.35!3d19.88!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDUyJzQ4LjAiTiA3NcKwMjEnMDAuMCJF!5e0!3m2!1sen!2sin!4v1"
                 width="100%"
                 height="380"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Ocean MGPS Sales & Multi Services — MIDC Industrial Area, Mukundwadi, Chh. Sambhaji Nagar"
+                title="Ocean MGPS Location — Chh. Sambhaji Nagar"
               />
             </div>
           </div>

@@ -104,14 +104,9 @@ export default function Footer() {
             <ul className="flex flex-col gap-3.5">
               <li className="flex items-start gap-3">
                 <MapPin size={16} className="text-[var(--color-primary)] flex-shrink-0 mt-0.5" />
-                <a
-                  href="https://maps.app.goo.gl/LZJodviBcYUcRdzr7"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs sm:text-sm text-slate-600 hover:text-[var(--color-primary)] leading-relaxed no-underline transition-colors"
-                >
+                <span className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                   {settings.address}
-                </a>
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Phone size={16} className="text-[var(--color-primary)] flex-shrink-0 mt-0.5" />

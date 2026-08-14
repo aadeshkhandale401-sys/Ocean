@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact Ocean MGPS — Get Free MGPS Site Survey & BOQ Estimate | Sambhaji Nagar",
   description:
-    "Contact Ocean MGPS Sales & Multi Services for free site surveys, BOQ preparation, technical consultations, and quotations in Chh. Sambhaji Nagar, Maharashtra, and across India. Call +91 8698648386 / 8007515182 / 7775904214. Office: MIDC Industrial Area, Mukundwadi, Chh. Sambhaji Nagar, MH 431006.",
+    "Contact Ocean MGPS Sales & Multi Services for free site surveys, BOQ preparation, technical consultations, and quotations in Chh. Sambhaji Nagar, Maharashtra, and across India. Call +91 8698648386 / 8007515182 / 7775904214. Office: Mukund Wadi, N-2, CIDCO, Chh. Sambhaji Nagar, MH.",
   keywords: [
     "Contact Ocean MGPS",
     "MGPS Quotation",
@@ -42,13 +42,12 @@ const contactJsonLd = {
     telephone: ["+918698648386", "+917775904214", "+918007515182"],
     email: "oceanmgps@gmail.com",
     url: "https://oceanmgps.in",
-    hasMap: "https://maps.app.goo.gl/LZJodviBcYUcRdzr7",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "MIDC Industrial Area, Mukundwadi",
+      streetAddress: "Mukund Wadi, N-2, CIDCO",
       addressLocality: "Chhatrapati Sambhaji Nagar",
       addressRegion: "Maharashtra",
-      postalCode: "431006",
+      postalCode: "431003",
       addressCountry: "IN",
     },
     contactPoint: {
