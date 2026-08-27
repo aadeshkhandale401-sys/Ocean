@@ -1,7 +1,7 @@
 // ============================================
 // Media Storage & Upload Helpers
-// - Videos -> Cloudinary CDN (Free 25GB, bypasses Firebase Blaze requirement)
-// - Images -> Firebase Storage (as originally configured)
+// - Videos -> Cloudinary CDN (Free 25GB, permanent stream URLs)
+// - Images -> Client-Side Compressed WebP Base64 (Instant, zero cloud limits)
 // ============================================
 
 import {
@@ -32,7 +32,9 @@ export async function uploadFile(
     if (isCloudinaryConfigured()) {
       try {
         const cloudinaryUrl = await uploadToCloudinary(file, onProgress);
-        return cloudinaryUrl;
+        if (cloudinaryUrl) {
+          return cloudinaryUrl;
+        }
       } catch (cloudinaryErr) {
         console.warn("Cloudinary video upload error, using local fallback:", cloudinaryErr);
       }
@@ -67,51 +69,29 @@ export async function uploadFile(
   }
 
   // ----------------------------------------------------
-  // 2. IMAGES & OTHER ASSETS -> Use Firebase Storage
+  // 2. IMAGES -> Client-side Compressed WebP Base64 (Instant & Works Everywhere)
   // ----------------------------------------------------
+  if (onProgress) onProgress(50);
   try {
-    const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
-    const storageRef = ref(storage, `${path}/${Date.now()}_${sanitizedName}`);
-    const uploadTask: UploadTask = uploadBytesResumable(storageRef, file);
-
-    return await new Promise<string>((resolve, reject) => {
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          if (onProgress) onProgress(progress);
-        },
-        (error) => {
-          console.warn("Firebase Storage upload task error:", error);
-          reject(error);
-        },
-        async () => {
-          try {
-            const url = await getDownloadURL(uploadTask.snapshot.ref);
-            resolve(url);
-          } catch (urlErr) {
-            reject(urlErr);
-          }
-        }
-      );
+    const compressed = await compressImage(file, 800, 0.7).catch(() => file);
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (onProgress) onProgress(100);
+        resolve(reader.result as string);
+      };
+      reader.onerror = (e) => reject(e);
+      reader.readAsDataURL(compressed);
     });
   } catch (err) {
-    console.warn("Firebase Storage image upload fallback engaged:", err);
-
-    // Fallback: Compress heavily for lightweight local storage data URL (< 50KB)
-    return new Promise<string>(async (resolve, reject) => {
-      try {
-        const compressed = await compressImage(file, 800, 0.7).catch(() => file);
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (onProgress) onProgress(100);
-          resolve(reader.result as string);
-        };
-        reader.onerror = (e) => reject(e);
-        reader.readAsDataURL(compressed);
-      } catch (fallbackErr) {
-        reject(fallbackErr);
-      }
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (onProgress) onProgress(100);
+        resolve(reader.result as string);
+      };
+      reader.onerror = (e) => reject(e);
+      reader.readAsDataURL(file);
     });
   }
 }
