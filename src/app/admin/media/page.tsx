@@ -32,6 +32,8 @@ function MediaItemCard({
   const isVideo = item.type === "video";
   const { isEmbed } = formatEmbedVideoUrl(item.url);
 
+  const [imgError, setImgError] = useState(false);
+
   useEffect(() => {
     let isMounted = true;
     resolveMediaBlobUrl(item.url).then((res) => {
@@ -44,9 +46,21 @@ function MediaItemCard({
 
   return (
     <div className="group relative bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs hover:shadow-md transition-all">
-      <div className="aspect-square relative bg-slate-900 overflow-hidden">
+      <div className="aspect-square relative bg-slate-100 overflow-hidden flex items-center justify-center">
         {!isVideo ? (
-          <img src={resolvedUrl} alt={item.name} className="w-full h-full object-cover" />
+          imgError || !resolvedUrl ? (
+            <div className="w-full h-full flex flex-col items-center justify-center text-slate-400 p-2 text-center bg-slate-100">
+              <ImageIcon size={24} className="mb-1 text-slate-300" />
+              <span className="text-[10px] font-medium text-slate-400">Image unavailable</span>
+            </div>
+          ) : (
+            <img
+              src={resolvedUrl || item.url}
+              alt={item.name}
+              className="w-full h-full object-cover"
+              onError={() => setImgError(true)}
+            />
+          )
         ) : (
           <div
             onClick={() => onPreview(item)}

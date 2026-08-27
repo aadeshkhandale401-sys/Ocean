@@ -1,77 +1,58 @@
 // ============================================
-// Client-Side Storage & Upload Helpers
-// Prioritizes Cloudinary (for live CDN URLs) with IndexedDB fallback
+// Media Storage & Upload Helpers
+// - Videos -> Cloudinary CDN (Free 25GB, bypasses Firebase Blaze requirement)
+// - Images -> Firebase Storage (as originally configured)
 // ============================================
 
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject,
+  UploadTask,
+} from "firebase/storage";
+import { storage } from "./firebase";
 import { storeBlobInIdb, deleteBlobFromIdb } from "./indexedDbMedia";
 import { uploadToCloudinary, isCloudinaryConfigured } from "./cloudinary";
 
-// Upload a single file with client-side progress tracking & Cloudinary / IndexedDB storage
+// Upload a single file with progress tracking
 export async function uploadFile(
   file: File,
-  _path: string,
+  path: string = "general",
   onProgress?: (progress: number) => void
 ): Promise<string> {
-  // 1. Try Cloudinary first if configured (Production CDN - permanent HTTPS URLs)
-  if (isCloudinaryConfigured()) {
-    try {
-      const cloudinaryUrl = await uploadToCloudinary(file, onProgress);
-      return cloudinaryUrl;
-    } catch (cloudinaryErr) {
-      console.warn("Cloudinary upload failed, falling back to IndexedDB:", cloudinaryErr);
-    }
-  }
+  const isVideo =
+    file.type.startsWith("video/") ||
+    /\.(mp4|webm|ogg|mov|m4v|avi|mkv)$/i.test(file.name);
 
-  // 2. Local fallback: Store in IndexedDB for development
-  if (onProgress) onProgress(30);
-  const fileId = `media_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-
-  if (typeof window !== "undefined" && window.indexedDB) {
-    try {
-      if (file.type.startsWith("image/")) {
-        const compressed = await compressImage(file, 1200, 0.8).catch(() => file);
-        await storeBlobInIdb(fileId, compressed);
-      } else {
-        await storeBlobInIdb(fileId, file);
+  // ----------------------------------------------------
+  // 1. VIDEOS -> Use Cloudinary CDN
+  // ----------------------------------------------------
+  if (isVideo) {
+    if (isCloudinaryConfigured()) {
+      try {
+        const cloudinaryUrl = await uploadToCloudinary(file, onProgress);
+        return cloudinaryUrl;
+      } catch (cloudinaryErr) {
+        console.warn("Cloudinary video upload error, using local fallback:", cloudinaryErr);
       }
-      if (onProgress) onProgress(100);
-      return `idb://${fileId}`;
-    } catch (err) {
-      console.warn("IndexedDB upload fallback:", err);
     }
-  }
 
-  // Fallback to FileReader if IndexedDB is not available
-  return new Promise<string>((resolve) => {
-    if (file.type.startsWith("image/")) {
-      compressImage(file, 800, 0.7)
-        .then((compressed) => {
-          if (onProgress) onProgress(70);
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (onProgress) onProgress(100);
-            resolve((reader.result as string) || URL.createObjectURL(file));
-          };
-          reader.onerror = () => {
-            if (onProgress) onProgress(100);
-            resolve(URL.createObjectURL(file));
-          };
-          reader.readAsDataURL(compressed);
-        })
-        .catch(() => {
-          if (onProgress) onProgress(70);
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (onProgress) onProgress(100);
-            resolve((reader.result as string) || URL.createObjectURL(file));
-          };
-          reader.onerror = () => {
-            if (onProgress) onProgress(100);
-            resolve(URL.createObjectURL(file));
-          };
-          reader.readAsDataURL(file);
-        });
-    } else {
+    // Local IndexedDB fallback for videos in development
+    if (onProgress) onProgress(30);
+    const fileId = `media_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+
+    if (typeof window !== "undefined" && window.indexedDB) {
+      try {
+        await storeBlobInIdb(fileId, file);
+        if (onProgress) onProgress(100);
+        return `idb://${fileId}`;
+      } catch (err) {
+        console.warn("IndexedDB video fallback:", err);
+      }
+    }
+
+    return new Promise<string>((resolve) => {
       const reader = new FileReader();
       reader.onload = () => {
         if (onProgress) onProgress(100);
@@ -82,8 +63,57 @@ export async function uploadFile(
         resolve(URL.createObjectURL(file));
       };
       reader.readAsDataURL(file);
-    }
-  });
+    });
+  }
+
+  // ----------------------------------------------------
+  // 2. IMAGES & OTHER ASSETS -> Use Firebase Storage
+  // ----------------------------------------------------
+  try {
+    const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+    const storageRef = ref(storage, `${path}/${Date.now()}_${sanitizedName}`);
+    const uploadTask: UploadTask = uploadBytesResumable(storageRef, file);
+
+    return await new Promise<string>((resolve, reject) => {
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          if (onProgress) onProgress(progress);
+        },
+        (error) => {
+          console.warn("Firebase Storage upload task error:", error);
+          reject(error);
+        },
+        async () => {
+          try {
+            const url = await getDownloadURL(uploadTask.snapshot.ref);
+            resolve(url);
+          } catch (urlErr) {
+            reject(urlErr);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    console.warn("Firebase Storage image upload fallback engaged:", err);
+
+    // Fallback: Compress heavily for lightweight local storage data URL (< 50KB)
+    return new Promise<string>(async (resolve, reject) => {
+      try {
+        const compressed = await compressImage(file, 800, 0.7).catch(() => file);
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (onProgress) onProgress(100);
+          resolve(reader.result as string);
+        };
+        reader.onerror = (e) => reject(e);
+        reader.readAsDataURL(compressed);
+      } catch (fallbackErr) {
+        reject(fallbackErr);
+      }
+    });
+  }
 }
 
 // Upload multiple files
@@ -102,13 +132,24 @@ export async function uploadMultipleFiles(
   return urls;
 }
 
-// Delete a file by URL (cleans up from IndexedDB if applicable)
+// Delete a file by URL
 export async function deleteFile(url: string): Promise<void> {
-  if (url && url.startsWith("idb://")) {
+  if (!url || url.startsWith("data:") || url.startsWith("blob:") || url.startsWith("/")) {
+    return;
+  }
+  if (url.startsWith("idb://")) {
     const id = url.replace("idb://", "");
     await deleteBlobFromIdb(id);
+    return;
   }
-  return Promise.resolve();
+  if (url.includes("firebasestorage.googleapis.com")) {
+    try {
+      const storageRef = ref(storage, url);
+      await deleteObject(storageRef);
+    } catch (error) {
+      console.warn("Firebase storage delete notice:", error);
+    }
+  }
 }
 
 // Delete multiple files
@@ -117,7 +158,7 @@ export async function deleteMultipleFiles(urls: string[]): Promise<void> {
   await Promise.all(promises);
 }
 
-// Compress image client-side before storing
+// Compress image client-side before storing/uploading
 export function compressImage(
   file: File,
   maxWidth: number = 1200,
@@ -169,3 +210,4 @@ export function compressImage(
     img.src = URL.createObjectURL(file);
   });
 }
+
