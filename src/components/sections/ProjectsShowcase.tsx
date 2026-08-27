@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Calendar, Building2, Video, Image as ImageIcon, Play, ArrowRight, X } from "lucide-react";
 import { useFirestore } from "@/hooks/useFirestore";
 import { Project } from "@/types";
+import VideoPlayer from "@/components/ui/VideoPlayer";
 
 const staticFallbackProjects: Partial<Project>[] = [
   {
@@ -20,7 +21,9 @@ const staticFallbackProjects: Partial<Project>[] = [
     completionDate: "Jan 2025",
     category: "MGPS Installation",
     images: ["/images/projects/mgps-installation.png"],
-    videos: [],
+    videos: [
+      "https://www.youtube.com/watch?v=k3_tw44QsZQ",
+    ],
     description: "Turnkey MGPS setup featuring medical oxygen copper pipelines, 4x4 manifold banks, zone valve boxes, and digital gas alarms across 120 hospital beds.",
   },
   {
@@ -31,7 +34,9 @@ const staticFallbackProjects: Partial<Project>[] = [
     completionDate: "Mar 2025",
     category: "Modular OT Setup",
     images: ["/images/products/modular-ot.png"],
-    videos: [],
+    videos: [
+      "https://www.youtube.com/watch?v=21X5lGlDOfg",
+    ],
     description: "State-of-the-art modular operation theater with ceiling-mounted surgical pendants, laminar airflow, and anti-bacterial paneling.",
   },
   {
@@ -42,7 +47,9 @@ const staticFallbackProjects: Partial<Project>[] = [
     completionDate: "Aug 2024",
     category: "MGPS Installation",
     images: ["/images/products/bed-head-panel.png"],
-    videos: [],
+    videos: [
+      "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    ],
     description: "Complete medical gas distribution system, ICU bed head panels, and 24/7 automated pressure monitoring controls.",
   },
 ];
@@ -51,7 +58,7 @@ export default function ProjectsShowcase() {
   const { data: dbProjects, loading } = useFirestore<Project>("projects");
   const [selectedProject, setSelectedProject] = useState<Partial<Project> | null>(null);
 
-  const projectsToDisplay = dbProjects.length > 0 ? dbProjects.slice(0, 3) : (loading ? (staticFallbackProjects as Project[]).slice(0, 3) : []);
+  const projectsToDisplay = dbProjects.length > 0 ? dbProjects.slice(0, 3) : (staticFallbackProjects as Project[]).slice(0, 3);
 
   return (
     <section className="section bg-slate-900 text-white relative overflow-hidden">
@@ -228,11 +235,7 @@ export default function ProjectsShowcase() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {selectedProject.videos.map((vid, idx) => (
                       <div key={idx} className="aspect-video rounded-2xl overflow-hidden bg-slate-950 shadow-md border border-slate-200">
-                        {vid.includes("youtube.com") || vid.includes("youtu.be") ? (
-                          <iframe src={vid} className="w-full h-full" title={`Project video ${idx + 1}`} allowFullScreen />
-                        ) : (
-                          <video src={vid} controls className="w-full h-full object-cover" />
-                        )}
+                        <VideoPlayer src={vid} title={`${selectedProject.title || "Project"} video ${idx + 1}`} />
                       </div>
                     ))}
                   </div>

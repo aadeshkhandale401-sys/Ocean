@@ -10,14 +10,69 @@ import { MapPin, Calendar, Building2, Video, Image as ImageIcon, Play, X, Extern
 import { PROJECT_CATEGORIES } from "@/lib/constants";
 import { useFirestore } from "@/hooks/useFirestore";
 import { Project } from "@/types";
+import VideoPlayer from "@/components/ui/VideoPlayer";
 
 const staticFallbackProjects: Partial<Project>[] = [
-  { title: "Complete MGPS Installation — Shri Sai Hospital", client: "Shri Sai Hospital", location: "Chh. Sambhaji Nagar, MH", completionDate: "Jan 2025", category: "MGPS Installation", images: ["/images/projects/mgps-installation.png"], videos: [] },
-  { title: "Modular OT & MGPS — Lifeline Multi-Specialty", client: "Lifeline Hospital", location: "Pune, MH", completionDate: "Mar 2025", category: "Modular OT Setup", images: ["/images/products/modular-ot.png"], videos: [] },
-  { title: "Pipeline Renovation — District General Hospital", client: "District Hospital", location: "Nashik, MH", completionDate: "Nov 2024", category: "Pipeline Work", images: ["/images/projects/mgps-installation.png"], videos: [] },
-  { title: "Greenfield MGPS — Apollo Care Hospital", client: "Apollo Care Hospital", location: "Mumbai, MH", completionDate: "Aug 2024", category: "MGPS Installation", images: ["/images/projects/mgps-installation.png"], videos: [] },
-  { title: "Equipment Supply — Government Medical College", client: "Government Medical College", location: "Nagpur, MH", completionDate: "Jun 2024", category: "Hospital Setup", images: ["/images/products/manifold-system.png"], videos: [] },
-  { title: "Emergency ICU Expansion — City Care Hospital", client: "City Care Hospital", location: "Chh. Sambhaji Nagar, MH", completionDate: "Feb 2024", category: "MGPS Installation", images: ["/images/products/bed-head-panel.png"], videos: [] },
+  {
+    title: "Complete MGPS Installation — Shri Sai Hospital",
+    client: "Shri Sai Hospital",
+    location: "Chh. Sambhaji Nagar, MH",
+    completionDate: "Jan 2025",
+    category: "MGPS Installation",
+    images: ["/images/projects/mgps-installation.png"],
+    videos: ["https://www.youtube.com/watch?v=k3_tw44QsZQ"],
+    description: "Turnkey MGPS setup featuring medical oxygen copper pipelines, 4x4 manifold banks, zone valve boxes, and digital gas alarms across 120 hospital beds.",
+  },
+  {
+    title: "Modular OT & MGPS — Lifeline Multi-Specialty",
+    client: "Lifeline Hospital",
+    location: "Pune, MH",
+    completionDate: "Mar 2025",
+    category: "Modular OT Setup",
+    images: ["/images/products/modular-ot.png"],
+    videos: ["https://www.youtube.com/watch?v=21X5lGlDOfg"],
+    description: "State-of-the-art modular operation theater with ceiling-mounted surgical pendants, laminar airflow, and anti-bacterial paneling.",
+  },
+  {
+    title: "Pipeline Renovation — District General Hospital",
+    client: "District Hospital",
+    location: "Nashik, MH",
+    completionDate: "Nov 2024",
+    category: "Pipeline Work",
+    images: ["/images/projects/mgps-installation.png"],
+    videos: ["https://www.youtube.com/watch?v=7wtfhZwyrcc"],
+    description: "Complete overhaul of hospital medical gas copper pipelines with zone valve assemblies and digital pressure monitoring.",
+  },
+  {
+    title: "Greenfield MGPS — Apollo Care Hospital",
+    client: "Apollo Care Hospital",
+    location: "Mumbai, MH",
+    completionDate: "Aug 2024",
+    category: "MGPS Installation",
+    images: ["/images/projects/mgps-installation.png"],
+    videos: ["https://www.youtube.com/watch?v=dQw4w9WgXcQ"],
+    description: "Complete medical gas distribution system, ICU bed head panels, and 24/7 automated pressure monitoring controls.",
+  },
+  {
+    title: "Equipment Supply — Government Medical College",
+    client: "Government Medical College",
+    location: "Nagpur, MH",
+    completionDate: "Jun 2024",
+    category: "Hospital Setup",
+    images: ["/images/products/manifold-system.png"],
+    videos: ["https://www.youtube.com/watch?v=kJQP7kiw5Fk"],
+    description: "Supply and commissioning of 500+ gas terminal units, dual cylinder manifolds, and medical air plant for emergency blocks.",
+  },
+  {
+    title: "Emergency ICU Expansion — City Care Hospital",
+    client: "City Care Hospital",
+    location: "Chh. Sambhaji Nagar, MH",
+    completionDate: "Feb 2024",
+    category: "MGPS Installation",
+    images: ["/images/products/bed-head-panel.png"],
+    videos: ["https://www.youtube.com/watch?v=k3_tw44QsZQ"],
+    description: "Emergency 40-bed ICU expansion with medical gas copper lines, vacuum regulators, and BPC flow meter stations.",
+  },
 ];
 
 export default function ProjectsPage() {
@@ -25,8 +80,8 @@ export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedProject, setSelectedProject] = useState<Partial<Project> | null>(null);
 
-  // Display live projects; fallback to static items only during initial uninitialized load
-  const allProjects = dbProjects.length > 0 ? dbProjects : (loading ? (staticFallbackProjects as Project[]) : []);
+  // Display live projects; fallback to static items if DB is uninitialized
+  const allProjects = dbProjects.length > 0 ? dbProjects : (staticFallbackProjects as Project[]);
 
   const filtered = allProjects.filter(
     (p) => activeCategory === "All" || p.category === activeCategory
@@ -225,11 +280,7 @@ export default function ProjectsPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {selectedProject.videos.map((vid, idx) => (
                       <div key={idx} className="aspect-video rounded-2xl overflow-hidden bg-slate-950 shadow-md border border-slate-200">
-                        {vid.includes("youtube.com") || vid.includes("youtu.be") ? (
-                          <iframe src={vid} className="w-full h-full" title={`Project video ${idx + 1}`} allowFullScreen />
-                        ) : (
-                          <video src={vid} controls className="w-full h-full object-cover" />
-                        )}
+                        <VideoPlayer src={vid} title={`${selectedProject.title || "Project"} video ${idx + 1}`} />
                       </div>
                     ))}
                   </div>

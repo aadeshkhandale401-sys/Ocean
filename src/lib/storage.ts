@@ -1,16 +1,47 @@
 // ============================================
 // Client-Side Storage & Upload Helpers
-// (Pure client-side processing — No Firebase Storage required)
+// Prioritizes Cloudinary (for live CDN URLs) with IndexedDB fallback
 // ============================================
 
-// Upload a single file with client-side progress tracking & local base64/blob conversion
+import { storeBlobInIdb, deleteBlobFromIdb } from "./indexedDbMedia";
+import { uploadToCloudinary, isCloudinaryConfigured } from "./cloudinary";
+
+// Upload a single file with client-side progress tracking & Cloudinary / IndexedDB storage
 export async function uploadFile(
   file: File,
   _path: string,
   onProgress?: (progress: number) => void
 ): Promise<string> {
-  if (onProgress) onProgress(30);
+  // 1. Try Cloudinary first if configured (Production CDN - permanent HTTPS URLs)
+  if (isCloudinaryConfigured()) {
+    try {
+      const cloudinaryUrl = await uploadToCloudinary(file, onProgress);
+      return cloudinaryUrl;
+    } catch (cloudinaryErr) {
+      console.warn("Cloudinary upload failed, falling back to IndexedDB:", cloudinaryErr);
+    }
+  }
 
+  // 2. Local fallback: Store in IndexedDB for development
+  if (onProgress) onProgress(30);
+  const fileId = `media_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+
+  if (typeof window !== "undefined" && window.indexedDB) {
+    try {
+      if (file.type.startsWith("image/")) {
+        const compressed = await compressImage(file, 1200, 0.8).catch(() => file);
+        await storeBlobInIdb(fileId, compressed);
+      } else {
+        await storeBlobInIdb(fileId, file);
+      }
+      if (onProgress) onProgress(100);
+      return `idb://${fileId}`;
+    } catch (err) {
+      console.warn("IndexedDB upload fallback:", err);
+    }
+  }
+
+  // Fallback to FileReader if IndexedDB is not available
   return new Promise<string>((resolve) => {
     if (file.type.startsWith("image/")) {
       compressImage(file, 800, 0.7)
@@ -41,15 +72,16 @@ export async function uploadFile(
           reader.readAsDataURL(file);
         });
     } else {
-      if (onProgress) onProgress(100);
-      try {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (onProgress) onProgress(100);
+        resolve((reader.result as string) || URL.createObjectURL(file));
+      };
+      reader.onerror = () => {
+        if (onProgress) onProgress(100);
         resolve(URL.createObjectURL(file));
-      } catch {
-        const reader = new FileReader();
-        reader.onload = () => resolve((reader.result as string) || "");
-        reader.onerror = () => resolve("");
-        reader.readAsDataURL(file);
-      }
+      };
+      reader.readAsDataURL(file);
     }
   });
 }
@@ -70,8 +102,12 @@ export async function uploadMultipleFiles(
   return urls;
 }
 
-// Delete a file by URL (No-op for client-side blob/data URLs)
-export async function deleteFile(_url: string): Promise<void> {
+// Delete a file by URL (cleans up from IndexedDB if applicable)
+export async function deleteFile(url: string): Promise<void> {
+  if (url && url.startsWith("idb://")) {
+    const id = url.replace("idb://", "");
+    await deleteBlobFromIdb(id);
+  }
   return Promise.resolve();
 }
 

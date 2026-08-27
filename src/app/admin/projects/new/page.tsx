@@ -12,6 +12,7 @@ import { addDocument } from "@/lib/firestore";
 import { useMediaUpload } from "@/hooks/useMediaUpload";
 import { PROJECT_CATEGORIES } from "@/lib/constants";
 import toast from "react-hot-toast";
+import VideoPlayer from "@/components/ui/VideoPlayer";
 
 export default function NewProjectPage() {
   const router = useRouter();
@@ -53,8 +54,15 @@ export default function NewProjectPage() {
   };
 
   const handleAddVideoUrl = () => {
-    if (!videoUrlInput.trim()) return;
-    setVideos((prev) => [...prev, videoUrlInput.trim()]);
+    let raw = videoUrlInput.trim();
+    if (!raw) return;
+    if (raw.startsWith("<iframe") || raw.includes("<iframe")) {
+      const srcMatch = raw.match(/src=["']([^"']+)["']/i);
+      if (srcMatch && srcMatch[1]) {
+        raw = srcMatch[1].trim();
+      }
+    }
+    setVideos((prev) => [...prev, raw]);
     setVideoUrlInput("");
     toast.success("Video URL added");
   };
@@ -149,13 +157,9 @@ export default function NewProjectPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {videos.map((url, i) => (
                   <div key={i} className="relative aspect-video rounded-lg overflow-hidden bg-slate-900 border border-slate-200">
-                    {url.includes("youtube.com") || url.includes("youtu.be") ? (
-                      <iframe src={url} className="w-full h-full" title={`Video ${i + 1}`} />
-                    ) : (
-                      <video src={url} controls className="w-full h-full object-cover" />
-                    )}
+                    <VideoPlayer src={url} title={`Video ${i + 1}`} />
                     <button type="button" onClick={() => setVideos((prev) => prev.filter((_, idx) => idx !== i))}
-                      className="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer z-10" style={{ border: "none" }}>
+                      className="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer z-10 hover:bg-red-600 transition-colors" style={{ border: "none" }}>
                       <X size={12} />
                     </button>
                   </div>

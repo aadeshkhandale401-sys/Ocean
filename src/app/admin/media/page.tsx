@@ -4,20 +4,114 @@
 
 "use client";
 
-import { useState } from "react";
-import { Upload, Trash2, ImageIcon, Copy, Check, Video } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Upload, Trash2, ImageIcon, Copy, Check, Video, Play, X } from "lucide-react";
 import { useFirestore } from "@/hooks/useFirestore";
 import { deleteDocument } from "@/lib/firestore";
 import { deleteFile } from "@/lib/storage";
 import { useMediaUpload } from "@/hooks/useMediaUpload";
 import { MediaItem } from "@/types";
+import VideoPlayer, { formatEmbedVideoUrl } from "@/components/ui/VideoPlayer";
+import { resolveMediaBlobUrl } from "@/lib/indexedDbMedia";
 import toast from "react-hot-toast";
+
+function MediaItemCard({
+  item,
+  copied,
+  onCopy,
+  onDelete,
+  onPreview,
+}: {
+  item: MediaItem;
+  copied: string | null;
+  onCopy: (url: string) => void;
+  onDelete: (item: MediaItem) => void;
+  onPreview: (item: MediaItem) => void;
+}) {
+  const [resolvedUrl, setResolvedUrl] = useState<string>(item.url);
+  const isVideo = item.type === "video";
+  const { isEmbed } = formatEmbedVideoUrl(item.url);
+
+  useEffect(() => {
+    let isMounted = true;
+    resolveMediaBlobUrl(item.url).then((res) => {
+      if (isMounted && res) setResolvedUrl(res);
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [item.url]);
+
+  return (
+    <div className="group relative bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs hover:shadow-md transition-all">
+      <div className="aspect-square relative bg-slate-900 overflow-hidden">
+        {!isVideo ? (
+          <img src={resolvedUrl} alt={item.name} className="w-full h-full object-cover" />
+        ) : (
+          <div
+            onClick={() => onPreview(item)}
+            className="w-full h-full relative flex items-center justify-center bg-slate-950 cursor-pointer"
+          >
+            {!isEmbed ? (
+              <video src={resolvedUrl} className="w-full h-full object-cover opacity-60" preload="metadata" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-indigo-950/50" />
+            )}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-full bg-indigo-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <Play size={18} className="fill-white translate-x-0.5" />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Hover Action Buttons */}
+        <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 backdrop-blur-xs">
+          {isVideo && (
+            <button
+              type="button"
+              onClick={() => onPreview(item)}
+              className="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-md hover:bg-indigo-700 transition-all cursor-pointer"
+              title="Play Video Preview"
+            >
+              <Play size={14} className="fill-white" />
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => onCopy(item.url)}
+            className="w-9 h-9 rounded-full bg-white text-slate-700 flex items-center justify-center shadow-md hover:bg-slate-100 transition-all cursor-pointer"
+            title="Copy File URL"
+          >
+            {copied === item.url ? <Check size={16} className="text-emerald-600" /> : <Copy size={16} />}
+          </button>
+          <button
+            type="button"
+            onClick={() => onDelete(item)}
+            className="w-9 h-9 rounded-full bg-white text-rose-600 flex items-center justify-center shadow-md hover:bg-rose-50 transition-all cursor-pointer"
+            title="Delete File"
+          >
+            <Trash2 size={16} />
+          </button>
+        </div>
+      </div>
+
+      <div className="p-2.5">
+        <p className="text-xs font-semibold text-slate-800 truncate">{item.name}</p>
+        <span className="text-[10px] text-slate-400 font-medium block mt-0.5 capitalize">
+          {item.type} asset
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminMediaPage() {
   const { data: media, loading, refetch } = useFirestore<MediaItem>("media");
   const { upload, uploading, progress } = useMediaUpload();
   const [copied, setCopied] = useState<string | null>(null);
   const [filterType, setFilterType] = useState<"all" | "image" | "video">("all");
+  const [previewVideo, setPreviewVideo] = useState<MediaItem | null>(null);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
@@ -108,7 +202,7 @@ export default function AdminMediaPage() {
           <p className="text-sm font-bold text-slate-800">
             {uploading ? `Uploading file... ${Math.round(progress)}%` : "Click or drag files here to upload photos or videos"}
           </p>
-          <p className="text-xs text-slate-500">Supports JPG, PNG, WebP, MP4, WEBM</p>
+          <p className="text-xs text-slate-500">Supports JPG, PNG, WebP, MP4, WEBM & YouTube/Vimeo URLs</p>
         </div>
         <input type="file" accept="image/*,video/*" multiple onChange={handleUpload} className="hidden" disabled={uploading} />
       </label>
@@ -127,50 +221,46 @@ export default function AdminMediaPage() {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {filteredMedia.map((item) => (
-            <div key={item.id} className="group relative bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs hover:shadow-md transition-all">
-              <div className="aspect-square relative bg-slate-900 overflow-hidden">
-                {item.type === "image" ? (
-                  <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-full h-full relative flex items-center justify-center bg-slate-950">
-                    <video src={item.url} className="w-full h-full object-cover opacity-70" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-10 h-10 rounded-full bg-blue-600/80 text-white flex items-center justify-center shadow-lg">
-                        <Video size={18} />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Hover Action Buttons */}
-                <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 backdrop-blur-xs">
-                  <button
-                    type="button"
-                    onClick={() => copyUrl(item.url)}
-                    className="w-9 h-9 rounded-full bg-white text-slate-700 flex items-center justify-center shadow-md hover:bg-slate-100 transition-all cursor-pointer"
-                    title="Copy File URL"
-                  >
-                    {copied === item.url ? <Check size={16} className="text-emerald-600" /> : <Copy size={16} />}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(item)}
-                    className="w-9 h-9 rounded-full bg-white text-rose-600 flex items-center justify-center shadow-md hover:bg-rose-50 transition-all cursor-pointer"
-                    title="Delete File"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              </div>
-
-              <div className="p-2.5">
-                <p className="text-xs font-semibold text-slate-800 truncate">{item.name}</p>
-                <span className="text-[10px] text-slate-400 font-medium block mt-0.5 capitalize">
-                  {item.type} asset
-                </span>
-              </div>
-            </div>
+            <MediaItemCard
+              key={item.id}
+              item={item}
+              copied={copied}
+              onCopy={copyUrl}
+              onDelete={handleDelete}
+              onPreview={setPreviewVideo}
+            />
           ))}
+        </div>
+      )}
+
+      {/* Video Preview Modal */}
+      {previewVideo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="bg-slate-900 text-white w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl relative p-6 space-y-4 border border-slate-800">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Video size={18} className="text-indigo-400" />
+                <h3 className="font-bold text-sm truncate max-w-md">{previewVideo.name}</h3>
+              </div>
+              <button
+                onClick={() => setPreviewVideo(null)}
+                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center cursor-pointer transition-colors"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <div className="aspect-video w-full rounded-2xl overflow-hidden bg-black">
+              <VideoPlayer src={previewVideo.url} title={previewVideo.name} />
+            </div>
+            <div className="flex justify-end pt-2">
+              <button
+                onClick={() => setPreviewVideo(null)}
+                className="btn btn-outline btn-sm font-bold text-xs py-2 px-5 rounded-xl border-slate-700 text-slate-300 hover:bg-slate-800"
+              >
+                Close Preview
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
