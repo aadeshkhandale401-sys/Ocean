@@ -9,10 +9,11 @@ export async function POST(req: NextRequest) {
   try {
     const cloudName =
       process.env.CLOUDINARY_CLOUD_NAME ||
-      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    const apiKey = process.env.CLOUDINARY_API_KEY;
-    const apiSecret = process.env.CLOUDINARY_API_SECRET;
-    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
+      "swqkiiu0";
+    const apiKey = process.env.CLOUDINARY_API_KEY || "124443996989839";
+    const apiSecret = process.env.CLOUDINARY_API_SECRET || "mByg6j_6zYk071QIuMivC5z8Frk";
+    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "ocean_uploads";
 
     if (!cloudName) {
       return NextResponse.json(

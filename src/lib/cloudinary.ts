@@ -18,8 +18,8 @@ export async function uploadToCloudinary(
   file: File,
   onProgress?: (progress: number) => void
 ): Promise<string> {
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "swqkiiu0";
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "ocean_uploads";
 
   // 1. Try Direct Unsigned Client-Side Upload (Recommended & Fastest)
   if (cloudName && uploadPreset) {
@@ -88,10 +88,8 @@ export async function uploadToCloudinary(
 }
 
 export function isCloudinaryConfigured(): boolean {
-  return Boolean(
-    (typeof window !== "undefined" &&
-      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME &&
-      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET) ||
-      process.env.CLOUDINARY_CLOUD_NAME
-  );
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "swqkiiu0";
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "ocean_uploads";
+  return Boolean(cloudName && uploadPreset);
 }
+
