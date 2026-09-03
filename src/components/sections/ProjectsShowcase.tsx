@@ -52,13 +52,26 @@ const staticFallbackProjects: Partial<Project>[] = [
     ],
     description: "Complete medical gas distribution system, ICU bed head panels, and 24/7 automated pressure monitoring controls.",
   },
+  {
+    id: "p4",
+    title: "Commercial LPG Manifold & Copper Gas Pipeline",
+    client: "Hotel & Industrial Kitchens",
+    location: "Chh. Sambhaji Nagar, MH",
+    completionDate: "Dec 2024",
+    category: "LPG Copper Pipeline",
+    images: ["/images/projects/lpg-manifold-installation.jpg"],
+    videos: [
+      "https://www.youtube.com/watch?v=7wtfhZwyrcc",
+    ],
+    description: "Turnkey rooftop commercial cylinder manifold bank with seamless yellow-coated copper piping, dual-stage pressure regulators, and auto gas leak shutoff valves.",
+  },
 ];
 
 export default function ProjectsShowcase() {
   const { data: dbProjects, loading } = useFirestore<Project>("projects");
   const [selectedProject, setSelectedProject] = useState<Partial<Project> | null>(null);
 
-  const projectsToDisplay = dbProjects.length > 0 ? dbProjects.slice(0, 3) : (staticFallbackProjects as Project[]).slice(0, 3);
+  const projectsToDisplay = dbProjects.length > 0 ? dbProjects.slice(0, 4) : (staticFallbackProjects as Project[]).slice(0, 4);
 
   return (
     <section className="section bg-slate-900 text-white relative overflow-hidden">
@@ -82,14 +95,19 @@ export default function ProjectsShowcase() {
 
           <Link
             href="/projects"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 backdrop-blur-md transition-all self-start md:self-auto cursor-pointer"
+            className="group relative z-10 inline-flex items-center justify-center gap-3 px-8 sm:px-9 py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 !text-white font-extrabold text-base sm:text-lg shadow-xl shadow-blue-600/30 hover:shadow-cyan-500/50 hover:scale-[1.04] active:scale-[0.98] transition-all duration-200 border border-cyan-300/30 self-start md:self-auto cursor-pointer"
+            style={{ color: "#FFFFFF" }}
           >
-            Explore All Projects ({dbProjects.length > 0 ? dbProjects.length : 6}) <ArrowRight size={16} />
+            <span>Explore All Projects</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-white text-xs sm:text-sm font-bold backdrop-blur-xs">
+              {dbProjects.length > 0 ? dbProjects.length : 6}
+            </span>
+            <ArrowRight size={22} className="transition-transform duration-200 group-hover:translate-x-1.5" />
           </Link>
         </div>
 
         {/* Project Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {projectsToDisplay.map((project, i) => {
             const mainImage = project.images && project.images.length > 0 ? project.images[0] : "";
             const hasVideo = project.videos && project.videos.length > 0;

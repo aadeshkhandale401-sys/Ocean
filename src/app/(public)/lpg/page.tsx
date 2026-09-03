@@ -120,6 +120,7 @@ const lpgApplications = [
     icon: Utensils,
     title: "Commercial Kitchen LPG Manifold Systems",
     tagline: "High-Flow Gas Piping for Hotels, Restaurants, Resorts & Canteens",
+    image: "/images/projects/lpg-manifold-installation.jpg",
     description:
       "Custom multi-cylinder manifold banks (4x4, 6x6, 10x10) engineered for high-demand commercial kitchens, bakery ovens, food courts, and industrial canteens requiring high gas flow rate.",
     benefits: [
@@ -186,13 +187,14 @@ const lpgBenefits = [
 
 export default function LPGPage() {
   const [selectedComponent, setSelectedComponent] = useState<(typeof lpgComponents)[number] | null>(null);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   return (
     <>
       {/* Hero Header */}
       <section className="section pb-8 sm:pb-12" style={{ background: "var(--color-bg-primary)" }}>
-        <div className="container text-center max-w-3xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}>
+        <div className="container max-w-5xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-3xl mx-auto mb-10">
             <span
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-xs font-semibold"
               style={{ background: "var(--color-primary-light)", color: "var(--color-primary)" }}
@@ -208,6 +210,81 @@ export default function LPGPage() {
             <p className="text-base sm:text-lg leading-relaxed text-slate-600 font-medium">
               Specialized installer of leakproof copper LPG piping, cylinder manifolds, gas leak detectors, and reticulated gas systems for homes, hotels, restaurants, and apartments across Maharashtra.
             </p>
+          </motion.div>
+
+          {/* Featured Real Installation Showcase */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+            className="rounded-3xl overflow-hidden border border-slate-200/90 shadow-xl bg-slate-900 text-white"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+              <div
+                onClick={() => setLightboxImage("/images/projects/lpg-manifold-installation.jpg")}
+                className="lg:col-span-7 relative min-h-[300px] sm:min-h-[400px] overflow-hidden group cursor-pointer"
+              >
+                <img
+                  src="/images/projects/lpg-manifold-installation.jpg"
+                  alt="Real Commercial LPG Cylinder Manifold & Gas Pipeline Installation by Ocean Sales & Services"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent lg:hidden" />
+                <div className="absolute top-4 left-4 flex items-center gap-2 flex-wrap">
+                  <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-emerald-500 text-white shadow-lg backdrop-blur-md">
+                    <CheckCircle2 size={14} /> Actual Site Installation
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold bg-slate-950/80 text-white backdrop-blur-md border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity">
+                    🔍 Click to Enlarge
+                  </span>
+                </div>
+              </div>
+
+              <div className="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
+                <div className="space-y-4">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-cyan-400">
+                    <Flame size={14} /> Commercial Gas Manifold Bank
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white" style={{ fontFamily: "var(--font-display)" }}>
+                    Turnkey LPG Manifold & Pipeline Network
+                  </h2>
+                  <p className="text-sm text-slate-300 leading-relaxed font-normal">
+                    Real rooftop commercial manifold bank featuring seamless yellow-coated gas line piping, high-pressure regulator with safety release, calibrated pressure gauge, and heavy-duty pigtails connected to 19.0 kg commercial cylinders.
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-2.5 pt-2">
+                    <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                      <span className="text-[11px] text-slate-400 block font-medium">Test Pressure</span>
+                      <span className="text-xs sm:text-sm font-bold text-white">25 Bar Hydrostatic</span>
+                    </div>
+                    <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                      <span className="text-[11px] text-slate-400 block font-medium">Safety Standard</span>
+                      <span className="text-xs sm:text-sm font-bold text-white">IS 6044 / PESO</span>
+                    </div>
+                    <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                      <span className="text-[11px] text-slate-400 block font-medium">Pressure Control</span>
+                      <span className="text-xs sm:text-sm font-bold text-white">Dual-Stage + Gauge</span>
+                    </div>
+                    <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                      <span className="text-[11px] text-slate-400 block font-medium">Gas Source</span>
+                      <span className="text-xs sm:text-sm font-bold text-white">19.0 Kg HP Cylinders</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
+                  <span className="text-xs text-slate-400 font-medium">Ocean Sales & Services</span>
+                  <Link
+                    href="/contact?service=LPG%20Copper%20Gas%20Pipeline"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors"
+                  >
+                    Request Site Survey <ArrowRight size={14} />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -262,6 +339,25 @@ export default function LPGPage() {
                   </div>
 
                   <div className="lg:col-span-6">
+                    {"image" in app && app.image && (
+                      <div className="rounded-2xl overflow-hidden border border-slate-200/80 shadow-md relative aspect-[16/10] group/img mb-6 bg-slate-900">
+                        <img
+                          src={app.image as string}
+                          alt={app.title}
+                          className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-3 left-3">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold bg-slate-950/85 text-white backdrop-blur-md border border-white/20">
+                            <CheckCircle2 size={12} className="text-emerald-400" /> On-Site Project Photo
+                          </span>
+                        </div>
+                        <div className="absolute bottom-3 right-3">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-black/75 text-cyan-300 backdrop-blur-xs">
+                            📍 Chh. Sambhaji Nagar
+                          </span>
+                        </div>
+                      </div>
+                    )}
                     <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-700 pb-3 mb-3 border-b border-slate-200/60">
                       KEY SAFETY & OPERATIONAL ADVANTAGES
                     </h4>

@@ -73,6 +73,16 @@ const staticFallbackProjects: Partial<Project>[] = [
     videos: ["https://www.youtube.com/watch?v=k3_tw44QsZQ"],
     description: "Emergency 40-bed ICU expansion with medical gas copper lines, vacuum regulators, and BPC flow meter stations.",
   },
+  {
+    title: "Commercial LPG Manifold & Copper Gas Pipeline",
+    client: "Hotel & Industrial Kitchens",
+    location: "Chh. Sambhaji Nagar, MH",
+    completionDate: "Dec 2024",
+    category: "LPG Copper Pipeline",
+    images: ["/images/projects/lpg-manifold-installation.jpg"],
+    videos: ["https://www.youtube.com/watch?v=7wtfhZwyrcc"],
+    description: "Turnkey rooftop commercial cylinder manifold bank with seamless yellow-coated copper piping, dual-stage pressure regulators, and auto gas leak shutoff valves.",
+  },
 ];
 
 export default function ProjectsPage() {
